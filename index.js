@@ -18,7 +18,7 @@ const upload = multer({
   },
 });
 
-app.post("/image", upload.single("avatar"), async (req, res) => {
+app.post("/image", upload.single("image"), async (req, res) => {
   try {
     await sharp(req.file.buffer)
       .resize({ width: 250, height: 250 })
