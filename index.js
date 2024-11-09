@@ -16,13 +16,16 @@ app.post("/test", (req, res) => {
   res.send({ msg: "Response to POST request to /" });
 });
 
-app.post("/image", upload.single("avatar"), async (req, res, next) {
+app.post("/image", upload.single("avatar"), async (req, res, next) => {
   try {
-    await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toFile(__dirname + `/images/${req.file.originalname}`)
-         res.status(201).send('Image uploaded succesfully')
+    await sharp(req.file.buffer)
+      .resize({ width: 250, height: 250 })
+      .png()
+      .toFile(__dirname + `/images/${req.file.originalname}`);
+    res.status(201).send("Image uploaded succesfully");
   } catch (error) {
-    console.log(error)
-    res.status(400).send(error)
+    console.log(error);
+    res.status(400).send(error);
   }
 });
 
