@@ -33,7 +33,7 @@ app.post("/image", upload.single("image"), async (req, res) => {
       .resize({ width: 250, height: 250 })
       .png()
       .toFile(`./images/${req.file.originalname}`);
-    console.log(res);
+    console.log(res.json);
     res.status(201).send("Image uploaded succesfully");
   } catch (error) {
     console.log(error);
