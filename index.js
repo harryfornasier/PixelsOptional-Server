@@ -34,7 +34,7 @@ app.post("/image", upload.single("image"), async (req, res) => {
       .png()
       .toFile(`./images/${req.file.originalname}`);
     console.log(res.json);
-    res.status(201).send("Image uploaded succesfully");
+    res.status(201).send({ msg: "Image uploaded succesfully" });
   } catch (error) {
     console.log(error);
     res.status(400).send(error);
