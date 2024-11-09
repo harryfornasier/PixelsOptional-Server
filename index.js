@@ -23,7 +23,7 @@ app.post("/image", upload.single("image"), async (req, res) => {
     await sharp(req.file.buffer)
       .resize({ width: 250, height: 250 })
       .png()
-      .toFile(`PhotoApi/images/${req.file.originalname}`);
+      .toFile(`home/harry/PhotoApi/images/${req.file.originalname}`);
     res.status(201).send("Image uploaded succesfully");
   } catch (error) {
     console.log(error);
