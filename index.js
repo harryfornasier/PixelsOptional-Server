@@ -51,6 +51,10 @@ app.post("/image", upload.single("image"), async (req, res) => {
   }
 });
 
+app.delete("/image/:id", (req, res) => {
+  console.log("A request to delete " + req.params.id);
+});
+
 app.get("/image/list", (req, res) => {
   const currentImages = imageList;
   return res.json(currentImages);
