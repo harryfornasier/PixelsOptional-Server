@@ -34,12 +34,13 @@ const upload = multer({
 app.post("/image", upload.single("image"), async (req, res) => {
   const newUuid = uuidv4();
   const path = `./images/${newUuid}.jpg`;
+  const src = `https://harrisonfornasier.space/static/${newUuid}`;
   try {
     sharp(req.file.buffer)
       .resize({ width: 250, height: 250 })
       .toFormat("jpg")
       .toFile(path);
-    const imageData = { originalname: req.file.originalname, path: path, id: newUuid };
+    const imageData = { originalname: req.file.originalname, src: src, id: newUuid };
     fs.writeFileSync("imageList.json", JSON.stringify(imageData));
     res.status(201).send({ msg: "Image uploaded succesfully", imageData });
   } catch (error) {
