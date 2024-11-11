@@ -56,7 +56,9 @@ app.delete("/image/:id", (req, res) => {
   fs.rename(`./images/${imageId}.jpg`, `./quarantine/${imageId}.jpg`, function (err) {
     if (err) throw err;
   });
-  console.log("A request to delete " + req.params.id);
+  for (let i = 0; i < imageList.length; i++) {
+    console.log(imageList[i].id[imageId]);
+  }
 });
 
 app.get("/image/list", (req, res) => {
