@@ -4,6 +4,7 @@ import sharp from "sharp";
 import https from "https";
 import cors from "cors";
 import fs from "fs";
+import { v4 as uuidv4 } from "uuid";
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -30,17 +31,20 @@ const upload = multer({
 });
 
 app.post("/image", upload.single("image"), async (req, res) => {
+  const newUuid = uuidv4();
+  const path = `./images/${newUuid}`;
   try {
-    sharp(req.file.buffer)
-      .resize({ width: 250, height: 250 })
-      .png()
-      .toFile(`./images/${req.file.originalname}`);
-    res.status(201).send({ msg: "Image uploaded succesfully" });
+    sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toFile(path);
+    const imageData = { originalname: req.file.originalname, path: path, id: newUuid };
+    //fs.writeFileSync("imageList.json", imageData);
+    res.status(201).send({ msg: "Image uploaded succesfully", imageData });
   } catch (error) {
     console.log(error);
     res.status(400).send(error);
   }
 });
+
+app.use("/static", express.static("images"));
 
 // httpsServer.listen(PORT);
 
