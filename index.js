@@ -15,7 +15,7 @@ app.use(cors());
 // const privateKey = fs.readFileSync("../Certificates/home_server.key", "utf8");
 // const certifcate = fs.readFileSync("../Certificates/home_server.pem", "utf8");
 
-const credentials = { key: privateKey, cert: certifcate };
+//const credentials = { key: privateKey, cert: certifcate };
 
 // const httpsServer = https.createServer(credentials, app);
 
