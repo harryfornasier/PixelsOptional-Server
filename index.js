@@ -15,6 +15,8 @@ app.use(cors());
 const privateKey = fs.readFileSync("../Certificates/home_server.key", "utf8");
 const certifcate = fs.readFileSync("../Certificates/home_server.pem", "utf8");
 
+const imageList = [];
+
 const credentials = { key: privateKey, cert: certifcate };
 
 const httpsServer = https.createServer(credentials, app);
@@ -41,7 +43,7 @@ app.post("/image", upload.single("image"), async (req, res) => {
       .toFormat("jpg")
       .toFile(path);
     const imageData = [{ originalname: req.file.originalname, src: src, id: newUuid }];
-    fs.writeFileSync("imageList.json", JSON.stringify(imageData));
+    imageList.push(imageData);
     res.status(201).send({ msg: "Image uploaded succesfully", imageData });
   } catch (error) {
     console.log(error);
@@ -50,7 +52,7 @@ app.post("/image", upload.single("image"), async (req, res) => {
 });
 
 app.get("/image/list", (req, res) => {
-  const currentImages = fs.readFileSync("imageList.json", "utf8");
+  const currentImages = imageList;
   return res.json(currentImages);
 });
 
