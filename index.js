@@ -9,6 +9,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
+app.use("/static", express.static("images"));
 app.use(cors());
 
 const privateKey = fs.readFileSync("../Certificates/home_server.key", "utf8");
@@ -32,9 +33,12 @@ const upload = multer({
 
 app.post("/image", upload.single("image"), async (req, res) => {
   const newUuid = uuidv4();
-  const path = `./images/${newUuid}`;
+  const path = `./images/${newUuid}.jpg`;
   try {
-    sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toFile(path);
+    sharp(req.file.buffer)
+      .resize({ width: 250, height: 250 })
+      .toFormat("jpg")
+      .toFile(path);
     const imageData = { originalname: req.file.originalname, path: path, id: newUuid };
     //fs.writeFileSync("imageList.json", imageData);
     res.status(201).send({ msg: "Image uploaded succesfully", imageData });
@@ -43,8 +47,6 @@ app.post("/image", upload.single("image"), async (req, res) => {
     res.status(400).send(error);
   }
 });
-
-app.use("/static", express.static("images"));
 
 // httpsServer.listen(PORT);
 
