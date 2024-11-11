@@ -40,16 +40,12 @@ app.post("/image", upload.single("image"), async (req, res) => {
       .toFormat("jpg")
       .toFile(path);
     const imageData = { originalname: req.file.originalname, path: path, id: newUuid };
-    //fs.writeFileSync("imageList.json", imageData);
+    fs.writeFileSync("imageList.json", imageData.json);
     res.status(201).send({ msg: "Image uploaded succesfully", imageData });
   } catch (error) {
     console.log(error);
     res.status(400).send(error);
   }
-});
-
-app.get("/test", (req, res) => {
-  res.json({ msg: "Reponse to GET request to /" });
 });
 
 httpsServer.listen(PORT);
