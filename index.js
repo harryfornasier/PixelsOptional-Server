@@ -48,6 +48,10 @@ app.post("/image", upload.single("image"), async (req, res) => {
   }
 });
 
+app.get("/image/list", (req, res) => {
+  return res.json(fs.readFileSync("imageList.json"));
+});
+
 httpsServer.listen(PORT);
 
 // app.listen(PORT, () => {
