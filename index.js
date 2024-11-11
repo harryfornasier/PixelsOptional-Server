@@ -19,6 +19,8 @@ const credentials = { key: privateKey, cert: certifcate };
 
 const httpsServer = https.createServer(credentials, app);
 
+console.log(credentials);
+
 const upload = multer({
   limits: {
     fileSize: 5000000,
