@@ -57,6 +57,7 @@ app.delete("/image/:id", (req, res) => {
     if (err) throw err;
   });
   for (let i = 0; i < imageList.length; i++) {
+    console.log(imageList[i]);
     console.log(imageList[i].id[imageId]);
   }
 });
