@@ -52,6 +52,7 @@ app.post("/image", upload.single("image"), async (req, res) => {
 });
 
 app.delete("/image/:id", (req, res) => {
+  fs.rename(`./images/${id}.jpg`, `./quarantine/${id}.jpg`);
   console.log("A request to delete " + req.params.id);
 });
 
