@@ -50,6 +50,7 @@ app.post("/image", upload.single("image"), async (req, res) => {
 
 app.get("/image/list", (req, res) => {
   const currentImages = fs.readFileSync("imageList.json");
+  console.log(currentImages);
   return res.json(currentImages);
 });
 
