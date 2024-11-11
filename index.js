@@ -48,6 +48,10 @@ app.post("/image", upload.single("image"), async (req, res) => {
   }
 });
 
+app.get("/test", (req, res) => {
+  res.json({ msg: "Reponse to GET request to /" });
+});
+
 httpsServer.listen(PORT);
 
 // app.listen(PORT, () => {
