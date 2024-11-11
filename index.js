@@ -49,8 +49,7 @@ app.post("/image", upload.single("image"), async (req, res) => {
 });
 
 app.get("/image/list", (req, res) => {
-  const currentImages = fs.readFileSync("imageList.json");
-  console.log(currentImages);
+  const currentImages = fs.readFileSync("imageList.json", "utf8");
   return res.json(currentImages);
 });
 
