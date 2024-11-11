@@ -6,7 +6,7 @@ import cors from "cors";
 import fs from "fs";
 import { v4 as uuidv4 } from "uuid";
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 443;
 
 app.use(express.json());
 app.use("/static", express.static("images"));
