@@ -40,7 +40,7 @@ app.post("/image", upload.single("image"), async (req, res) => {
       .toFormat("jpg")
       .toFile(path);
     const imageData = { originalname: req.file.originalname, path: path, id: newUuid };
-    fs.writeFileSync("imageList.json", imageData.json);
+    fs.writeFileSync("imageList.json", JSON.stringify(imageData));
     res.status(201).send({ msg: "Image uploaded succesfully", imageData });
   } catch (error) {
     console.log(error);
