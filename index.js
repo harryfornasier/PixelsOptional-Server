@@ -12,12 +12,12 @@ app.use(express.json());
 app.use("/static", express.static("images"));
 app.use(cors());
 
-// const privateKey = fs.readFileSync("../Certificates/home_server.key", "utf8");
-// const certifcate = fs.readFileSync("../Certificates/home_server.pem", "utf8");
+const privateKey = fs.readFileSync("../Certificates/home_server.key", "utf8");
+const certifcate = fs.readFileSync("../Certificates/home_server.pem", "utf8");
 
-//const credentials = { key: privateKey, cert: certifcate };
+const credentials = { key: privateKey, cert: certifcate };
 
-// const httpsServer = https.createServer(credentials, app);
+const httpsServer = https.createServer(credentials, app);
 
 const upload = multer({
   limits: {
@@ -48,8 +48,8 @@ app.post("/image", upload.single("image"), async (req, res) => {
   }
 });
 
-// httpsServer.listen(PORT);
+httpsServer.listen(PORT);
 
-app.listen(PORT, () => {
-  console.log("App be listening");
-});
+// app.listen(PORT, () => {
+//   console.log("App be listening");
+// });
