@@ -60,4 +60,6 @@ app.get("/image/list", (req, res) => {
   return res.json(currentImages);
 });
 
-httpsServer.listen(PORT);
+app.listen(PORT, () => {
+  console.log("App be listening");
+});
