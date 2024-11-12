@@ -6,20 +6,13 @@ import cors from "cors";
 import fs from "fs";
 import { v4 as uuidv4 } from "uuid";
 const app = express();
-const PORT = process.env.PORT || 443;
+const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use("/static", express.static("images"));
 app.use(cors());
 
-const privateKey = fs.readFileSync("../Certificates/home_server.key", "utf8");
-const certifcate = fs.readFileSync("../Certificates/home_server.pem", "utf8");
-
 const imageList = [];
-
-const credentials = { key: privateKey, cert: certifcate };
-
-const httpsServer = https.createServer(credentials, app);
 
 const upload = multer({
   limits: {
@@ -68,7 +61,3 @@ app.get("/image/list", (req, res) => {
 });
 
 httpsServer.listen(PORT);
-
-// app.listen(PORT, () => {
-//   console.log("App be listening");
-// });
