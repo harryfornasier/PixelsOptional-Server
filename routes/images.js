@@ -35,6 +35,7 @@ router
         .toFile(path);
       const imageData = { originalname: req.file.originalname, src: src, id: newUuid };
       imageList.push(imageData);
+      console.log(req);
       res.status(201).send({ msg: "Image uploaded succesfully", imageData });
     } catch (error) {
       console.log(error);
