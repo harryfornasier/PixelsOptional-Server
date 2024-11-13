@@ -9,9 +9,9 @@ const router = express.Router();
 const imageList = [];
 
 const upload = multer({
-  limits: {
-    fileSize: 5000000,
-  },
+  //   limits: {
+  //     fileSize: 5000000,
+  //   },
   fileFilter(req, file, cb) {
     if (!file.originalname.match(/\.(jpg|jpeg|png|JPG)$/)) {
       return cb(new Error("Please upload a valid image file"));
@@ -52,6 +52,7 @@ router.delete("/:id", (req, res) => {
     imageList.findIndex((image) => image.id === imageId),
     1
   );
+  res.status(204).send({ msg: "Image succesfully deleted" });
 });
 
 export default router;
