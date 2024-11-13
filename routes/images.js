@@ -33,7 +33,6 @@ router
         .toFile(path);
       const imageData = { originalname: req.file.originalname, src: src, id: newUuid };
       imageList.push(imageData);
-      console.log(req.file);
       res.status(201).send({ msg: "Image uploaded succesfully", imageData });
     } catch (error) {
       console.log(error);
@@ -42,7 +41,7 @@ router
   })
   .get("/", (req, res) => {
     const currentImages = imageList;
-    return res.json(currentImages);
+    res.status(200).json(currentImages);
   });
 
 router.delete("/:id", (req, res) => {
