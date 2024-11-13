@@ -28,7 +28,7 @@ router
     const src = `https://harrisonfornasier.space/static/${newUuid}.jpg`;
     try {
       sharp(req.file.buffer)
-        .resize(800, 800, {
+        .resize(300, 300, {
           fit: "inside",
         })
         .toFormat("jpg")
