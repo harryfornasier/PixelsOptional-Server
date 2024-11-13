@@ -9,9 +9,10 @@ const router = express.Router();
 const imageList = [];
 
 const upload = multer({
-  //   limits: {
-  //     fileSize: 5000000,
-  //   },
+  limits: {
+    fileSize: 5000000,
+  },
+
   fileFilter(req, file, cb) {
     if (!file.originalname.match(/\.(jpg|jpeg|png|JPG)$/)) {
       return cb(new Error("Please upload a valid image file"));
