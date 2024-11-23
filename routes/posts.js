@@ -22,20 +22,6 @@ const upload = multer({
   },
 });
 
-router.get("/", async (_req, res) => {
-  try {
-    const posts = await knex("post");
-
-    if (!posts.length) {
-      return res.status(404).json({ message: "No posts found" });
-    }
-
-    res.json(posts);
-  } catch (error) {
-    res.status(500).json({ mesesage: `Error fetching from database: ${error}` });
-  }
-});
-
 router.post("/", upload.single("image"), async (req, res) => {
   const newUuid = uuidv4();
   const path = `./images/${newUuid}.jpg`;
@@ -62,17 +48,36 @@ router.post("/", upload.single("image"), async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
+// router.get("/", async (req, res) => {
+//   try {
+//     //const posts =
+
+//     res.status(200).json(posts);
+//   } catch (error) {}
+// });
+
+router.get("/", async (_req, res) => {
   try {
-    const posts = await knex("post");
-    res.status(200).json(posts);
-  } catch (error) {}
+    const posts = await knex("post").join("camera", "camera.id", "post.camera_id");
+
+    res.json(posts);
+  } catch (error) {
+    res.status(500).json({ mesesage: `Error fetching from database: ${error}` });
+  }
 });
 
 router.get("/:id", async (req, res) => {
   const postId = req.params.id;
   try {
-    const post = await knex("post").where("id", postId);
+    const commentsKnex = await knex("comment").where("post_id", postId);
+    const postKnex = await knex("post").where("id", postId);
+
+    const post = {
+      post: postKnex,
+      comments: commentsKnex,
+    };
+    //const post = await knex("post").join("comment", "post.id", "comment.post_id");
+
     res.status(200).json({ msg: "comment uploaded succesfully", post });
   } catch (error) {
     res.status(400).send(error);
