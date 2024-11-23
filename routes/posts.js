@@ -62,4 +62,21 @@ router.post("/", upload.single("image"), async (req, res) => {
   }
 });
 
+router.get("/", async (req, res) => {
+  try {
+    const posts = await knex("post");
+    res.status(200).json(posts);
+  } catch (error) {}
+});
+
+router.get("/:id", async (req, res) => {
+  const postId = req.params.id;
+  try {
+    const post = await knex("post").where("id", postId);
+    res.status(200).json({ msg: "comment uploaded succesfully", post });
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
 export default router;

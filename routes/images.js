@@ -21,46 +21,46 @@ const upload = multer({
   },
 });
 
-router
-  .post("/", upload.single("image"), async (req, res) => {
-    const newUuid = uuidv4();
-    const path = `./images/${newUuid}.jpg`;
-    const src = `https://harrisonfornasier.space/static/${newUuid}.jpg`;
-    try {
-      sharp(req.file.buffer)
-        .resize(300, 300, {
-          fit: "inside",
-        })
-        .toFormat("jpg")
-        .toFile(path);
-      const imageData = {
-        originalname: req.file.originalname,
-        src: src,
-        id: newUuid,
-        description: req.body.description,
-      };
-      imageList.push(imageData);
-      res.status(201).send({ msg: "Image uploaded succesfully", imageData });
-    } catch (error) {
-      console.log(error);
-      res.status(400).send(error);
-    }
-  })
-  .get("/", (req, res) => {
-    const currentImages = imageList;
-    res.status(200).json(currentImages);
-  });
+// router
+//   .post("/", upload.single("image"), async (req, res) => {
+//     const newUuid = uuidv4();
+//     const path = `./images/${newUuid}.jpg`;
+//     const src = `https://harrisonfornasier.space/static/${newUuid}.jpg`;
+//     try {
+//       sharp(req.file.buffer)
+//         .resize(300, 300, {
+//           fit: "inside",
+//         })
+//         .toFormat("jpg")
+//         .toFile(path);
+//       const imageData = {
+//         originalname: req.file.originalname,
+//         src: src,
+//         id: newUuid,
+//         description: req.body.description,
+//       };
+//       imageList.push(imageData);
+//       res.status(201).send({ msg: "Image uploaded succesfully", imageData });
+//     } catch (error) {
+//       console.log(error);
+//       res.status(400).send(error);
+//     }
+//   })
+//   .get("/", (req, res) => {
+//     const currentImages = imageList;
+//     res.status(200).json(currentImages);
+//   });
 
-router.delete("/:id", (req, res) => {
-  const imageId = req.params.id;
-  fs.rename(`./images/${imageId}.jpg`, `./quarantine/${imageId}.jpg`, function (err) {
-    if (err) throw err;
-  });
-  imageList.splice(
-    imageList.findIndex((image) => image.id === imageId),
-    1
-  );
-  res.status(204).send({ msg: "Image succesfully deleted" });
-});
+// router.delete("/:id", (req, res) => {
+//   const imageId = req.params.id;
+//   fs.rename(`./images/${imageId}.jpg`, `./quarantine/${imageId}.jpg`, function (err) {
+//     if (err) throw err;
+//   });
+//   imageList.splice(
+//     imageList.findIndex((image) => image.id === imageId),
+//     1
+//   );
+//   res.status(204).send({ msg: "Image succesfully deleted" });
+// });
 
 export default router;
