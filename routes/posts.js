@@ -58,7 +58,7 @@ router.post("/", upload.single("image"), async (req, res) => {
 
 router.get("/", async (_req, res) => {
   try {
-    const posts = await knex("post").join("camera", "camera.id", "post.camera_id");
+    const posts = await knex("camera").join("post", "camera.id", "post.camera_id");
 
     res.json(posts);
   } catch (error) {
