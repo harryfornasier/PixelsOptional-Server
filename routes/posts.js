@@ -36,7 +36,7 @@ router.post("/", upload.single("image"), async (req, res) => {
     const imageData = {
       user_id: 2,
       title: req.body.title,
-      content: req.body.description,
+      content: "",
       image_url: src,
       camera_id: 1,
     };
