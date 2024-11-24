@@ -9,7 +9,9 @@ const postData = [
     title: "First Post",
     content: "Hello world!",
     user_id: 2,
-    image_url: "image.com",
+    like: 5,
+    image_url:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Dhole%28Asiatic_wild_dog%29.jpg/640px-Dhole%28Asiatic_wild_dog%29.jpg",
     camera_id: 1,
   },
   {
@@ -17,7 +19,9 @@ const postData = [
     title: "Second Post",
     content: "Hello another world!",
     user_id: 3,
-    image_url: "image.com",
+    like: 11,
+    image_url:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Canis_lupus_familiaris.001_-_Monfero.jpg/640px-Canis_lupus_familiaris.001_-_Monfero.jpg",
     camera_id: 1,
   },
 ];

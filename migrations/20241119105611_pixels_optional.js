@@ -13,8 +13,11 @@ export function up(knex) {
     })
     .createTable("post", (table) => {
       table.increments("id");
+      table.timestamp("created_at").defaultTo(knex.fn.now());
+      table.timestamp("updated_at").defaultTo(knex.fn.now());
       table.integer("user_id").unsigned().notNullable();
       table.string("title", 30).notNullable();
+      table.integer("like");
       table.string("content");
       table.string("image_url").notNullable();
       table.integer("camera_id").unsigned().notNullable();
