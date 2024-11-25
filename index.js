@@ -1,9 +1,7 @@
 import express from "express";
 import cors from "cors";
-import images from "./routes/images.js";
 import posts from "./routes/posts.js";
 import comments from "./routes/comments.js";
-import post from "./routes/post.js";
 import "dotenv/config";
 
 const app = express();

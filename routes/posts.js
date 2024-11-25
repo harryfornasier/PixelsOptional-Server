@@ -69,15 +69,47 @@ router.get("/", async (_req, res) => {
 router.get("/:id", async (req, res) => {
   const postId = req.params.id;
   try {
-    const commentsKnex = await knex("comment").where("post_id", postId);
-    const postKnex = await knex("post").where("id", postId);
-
-    const post = {
-      post: postKnex,
-      comments: commentsKnex,
-    };
-    //const post = await knex("post").join("comment", "post.id", "comment.post_id");
-
+    const post = await knex("post")
+      .leftJoin("comment", "post.id", "comment.post_id")
+      .leftJoin("camera", "post.camera_id", "camera.id")
+      .select(
+        "post.id as post_id",
+        "post.created_at",
+        "post.updated_at",
+        "post.user_id",
+        "post.title",
+        "post.like",
+        "post.content",
+        "post.image_url",
+        "camera.id as camera_id",
+        "camera_model as camera.model",
+        "camera_year as camera.year",
+        "camera_brand as camera.brand"
+      )
+      .select(
+        knex.raw(`JSON_ARRAYAGG(
+        JSON_OBJECT(
+          'comment_id', comment.id,
+          'user_id', comment.user_id,
+          'text', comment.comment
+        )
+      ) AS comments`)
+      )
+      .where("post.id", postId)
+      .groupBy(
+        "post.id",
+        "post.created_at",
+        "post.updated_at",
+        "post.user_id",
+        "post.title",
+        "post.like",
+        "post.content",
+        "post.image_url",
+        "camera.id",
+        "camera_model",
+        "camera_year",
+        "camera_brand"
+      );
     res.status(200).json({ msg: "comment uploaded succesfully", post });
   } catch (error) {
     res.status(400).send(error);

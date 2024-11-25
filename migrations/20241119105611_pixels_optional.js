@@ -17,7 +17,8 @@ export function up(knex) {
       table.timestamp("updated_at").defaultTo(knex.fn.now());
       table.integer("user_id").unsigned().notNullable();
       table.string("title", 30).notNullable();
-      table.integer("like");
+      table.integer("like").unsigned().defaultTo(0);
+      table.integer("comment_count").unsigned().defaultTo(0);
       table.string("content");
       table.string("image_url").notNullable();
       table.integer("camera_id").unsigned().notNullable();

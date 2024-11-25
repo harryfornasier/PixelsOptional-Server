@@ -1,6 +1,6 @@
 import initKnex from "knex";
 import knexConfig from "../knexfile.js";
-import router from "./images.js";
+import router from "./posts.js";
 
 const knex = initKnex(knexConfig);
 
@@ -12,6 +12,7 @@ router.post("/", async (req, res) => {
   };
   try {
     console.log(comment);
+    const updateCount = await knex("post").update(post.comment_count);
     const newComment = await knex("comment").insert(comment);
     res.status(201).json({ msg: "comment uploaded succesfully", newComment });
   } catch (error) {
