@@ -48,14 +48,6 @@ router.post("/", upload.single("image"), async (req, res) => {
   }
 });
 
-// router.get("/", async (req, res) => {
-//   try {
-//     //const posts =
-
-//     res.status(200).json(posts);
-//   } catch (error) {}
-// });
-
 router.get("/", async (_req, res) => {
   try {
     const posts = await knex("camera").join("post", "camera.id", "post.camera_id");
@@ -110,7 +102,7 @@ router.get("/:id", async (req, res) => {
         "camera_year",
         "camera_brand"
       );
-    res.status(200).json({ msg: "comment uploaded succesfully", post });
+    res.status(200).json({ msg: "Found post succesfully", post });
   } catch (error) {
     res.status(400).send(error);
   }

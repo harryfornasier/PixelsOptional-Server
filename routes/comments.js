@@ -1,18 +1,22 @@
 import initKnex from "knex";
 import knexConfig from "../knexfile.js";
-import router from "./posts.js";
 
 const knex = initKnex(knexConfig);
 
+import express from "express";
+const router = express.Router();
+
 router.post("/", async (req, res) => {
+  const postId = req.body.postId;
   const comment = {
-    post_id: req.body.postId,
+    post_id: postId,
     user_id: req.body.userId,
     comment: req.body.comment,
   };
   try {
-    console.log(comment);
-    const updateCount = await knex("post").update(post.comment_count);
+    const updateCount = await knex("post")
+      .increment("comment_count", 1)
+      .where("post.id", postId);
     const newComment = await knex("comment").insert(comment);
     res.status(201).json({ msg: "comment uploaded succesfully", newComment });
   } catch (error) {
