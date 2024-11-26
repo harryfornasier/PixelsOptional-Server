@@ -4,6 +4,7 @@ export function up(knex) {
       table.increments("id");
       table.string("name").notNullable();
       table.string("email").notNullable();
+      table.string("password").notNullable();
     })
     .createTable("camera", (table) => {
       table.increments("id");
