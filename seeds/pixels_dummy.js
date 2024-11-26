@@ -1,7 +1,25 @@
 const userData = [
-  { id: 1, name: "Sammy", email: "sammy@gmail.com", password: "" },
-  { id: 2, name: "John", email: "john@gmail.com", password: "" },
-  { id: 3, name: "Jessica", email: "jessica@gmail.com", password: "" },
+  {
+    id: 1,
+    name: "Harrison",
+    email: "sammy@gmail.com",
+    password: "$2b$08$C5g2th6VkjZyqdOwTehx4OcyaQ.Odet5iLGc0R/D2wLlEXX94gaum",
+    admin: "false",
+  },
+  {
+    id: 2,
+    name: "John",
+    email: "john@gmail.com",
+    password: "$2b$08$C5g2th6VkjZyqdOwTehx4OcyaQ.Odet5iLGc0R/D2wLlEXX94gaum",
+    adming: "false",
+  },
+  {
+    id: 3,
+    name: "Jessica",
+    email: "jessica@gmail.com",
+    password: "$2b$08$C5g2th6VkjZyqdOwTehx4OcyaQ.Odet5iLGc0R/D2wLlEXX94gaum",
+    admin: "false",
+  },
 ];
 const postData = [
   {
@@ -38,6 +56,7 @@ const cameraData = [
 export async function seed(knex) {
   await knex("user").del();
   await knex("user").insert(userData);
+  await knex("user").update(user.password);
   await knex("camera").del();
   await knex("camera").insert(cameraData);
   await knex("post").del();
