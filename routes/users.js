@@ -62,10 +62,15 @@ router.post("/login", async (req, res) => {
 router.get("/profile", authorise, async (req, res) => {
   try {
     const user = await knex("user").where({ id: req.token.id }).first();
+    const posts = await knex("camera")
+      .join("post", "camera.id", "post.camera_id")
+      .where("post.user_id", req.token.id)
+      .join("user", "user.id", "post.user_id") // Join with the 'user' table
+      .select("camera.*", "post.*", "user.name");
 
     delete user.password;
 
-    res.json(user);
+    res.json({ user: user, posts: posts });
   } catch (error) {
     res.status(500).json({ message: "can't fetch user profile" });
   }
