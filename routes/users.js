@@ -63,7 +63,9 @@ router.get("/profile", authorise, async (req, res) => {
   try {
     const user = await knex("user").where({ id: req.token.id }).first();
 
-    res.json(user.id);
+    delete user.password;
+
+    res.json(user);
   } catch (error) {
     res.status(500).json({ message: "can't fetch user profile" });
   }
