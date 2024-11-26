@@ -7,6 +7,7 @@ import multer from "multer";
 const knex = initKnex(knexConfig);
 
 import express from "express";
+import authorise from "./middleware/auth.js";
 const router = express.Router();
 
 const upload = multer({
@@ -22,7 +23,7 @@ const upload = multer({
   },
 });
 
-router.post("/", upload.single("image"), async (req, res) => {
+router.post("/", [authorise, upload.single("image")], async (req, res) => {
   const newUuid = uuidv4();
   const path = `./images/${newUuid}.jpg`;
   const src = `https://harrisonfornasier.space/static/${newUuid}.jpg`;
@@ -34,7 +35,7 @@ router.post("/", upload.single("image"), async (req, res) => {
       .toFormat("jpg")
       .toFile(path);
     const imageData = {
-      user_id: 2,
+      user_id: req.token.id,
       title: req.body.title,
       content: "",
       image_url: src,
