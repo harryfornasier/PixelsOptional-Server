@@ -1,7 +1,7 @@
 const userData = [
-  { id: 1, name: "Sammy", email: "sammy@gmail.com" },
-  { id: 2, name: "John", email: "john@gmail.com" },
-  { id: 3, name: "Jessica", email: "jessica@gmail.com" },
+  { id: 1, name: "Sammy", email: "sammy@gmail.com", password: "" },
+  { id: 2, name: "John", email: "john@gmail.com", password: "" },
+  { id: 3, name: "Jessica", email: "jessica@gmail.com", password: "" },
 ];
 const postData = [
   {
@@ -36,7 +36,6 @@ const cameraData = [
 ];
 
 export async function seed(knex) {
-  // Deletes ALL existing entries
   await knex("user").del();
   await knex("user").insert(userData);
   await knex("camera").del();
