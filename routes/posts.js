@@ -50,7 +50,10 @@ router.post("/", upload.single("image"), async (req, res) => {
 
 router.get("/", async (_req, res) => {
   try {
-    const posts = await knex("camera").join("post", "camera.id", "post.camera_id");
+    const posts = await knex("camera")
+      .join("post", "camera.id", "post.camera_id")
+      .join("user", "user.id", "post.user_id") // Join with the 'user' table
+      .select("camera.*", "post.*", "user.name");
 
     res.json(posts);
   } catch (error) {
