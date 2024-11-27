@@ -4,13 +4,14 @@ import knexConfig from "../knexfile.js";
 const knex = initKnex(knexConfig);
 
 import express from "express";
+import authorise from "./middleware/auth.js";
 const router = express.Router();
 
-router.post("/", async (req, res) => {
+router.post("/", authorise, async (req, res) => {
   const postId = req.body.postId;
   const comment = {
     post_id: postId,
-    user_id: req.body.userId,
+    user_id: req.token.id,
     comment: req.body.comment,
   };
   try {
