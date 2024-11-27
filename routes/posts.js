@@ -78,9 +78,9 @@ router.get("/:id", async (req, res) => {
         "post.content",
         "post.image_url",
         "camera.id as camera_id",
-        "camera_model as camera.model",
-        "camera_year as camera.year",
-        "camera_brand as camera.brand"
+        "camera_model as camera_model",
+        "camera_year as camera_year",
+        "camera_brand as camera_brand"
       )
       .select(
         knex.raw(`JSON_ARRAYAGG(
