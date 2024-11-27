@@ -28,7 +28,13 @@ router.post("/", [authorise, upload.single("image")], async (req, res) => {
   const path = `./images/${newUuid}.jpg`;
   const src = `https://harrisonfornasier.space/static/${newUuid}.jpg`;
   try {
-    sharp(req.file.buffer).rotate().resize({ height: 200 }).toFormat("jpg").toFile(path);
+    sharp(req.file.buffer)
+      .rotate()
+      .resize(1440, 1050, {
+        fit: "cover",
+      })
+      .toFormat("jpg")
+      .toFile(path);
     const imageData = {
       user_id: req.token.id,
       title: req.body.title,
