@@ -29,7 +29,9 @@ router.get("/:id", async (req, res) => {
   try {
     const comments = await knex("comment").where("post_id", postId);
     res.status(200).json({ msg: "Found the comments", comments });
-  } catch (error) {}
+  } catch (error) {
+    res.status(404).json({ msg: `Could not find comments: ${error}` });
+  }
 });
 
 export default router;
