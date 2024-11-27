@@ -42,7 +42,7 @@ router.post("/", [authorise, upload.single("image")], async (req, res) => {
       camera_id: 1,
     };
     const newPost = await knex("post").insert(imageData);
-    res.status(201).send({ msg: "Image uploaded succesfully", imageData });
+    res.status(201).send({ msg: "Image uploaded succesfully", newPost });
   } catch (error) {
     console.log(error);
     res.status(400).send(error);
