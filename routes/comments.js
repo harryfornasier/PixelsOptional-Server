@@ -35,7 +35,7 @@ router.get("/:id", async (req, res) => {
 
     console.log(comments);
 
-    if (!comments.comment) {
+    if (!comments.length) {
       res.status(204).json({ msg: "No comments for this post" });
     } else {
       res.status(200).json({ msg: "Found the comments", comments });
