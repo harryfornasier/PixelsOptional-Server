@@ -31,7 +31,7 @@ router.post("/", [authorise, upload.single("image")], async (req, res) => {
     sharp(req.file.buffer)
       .rotate()
       .resize(1440, 1050, {
-        fit: "cover",
+        fit: "contain",
       })
       .toFormat("jpg")
       .toFile(path);
