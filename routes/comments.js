@@ -33,7 +33,13 @@ router.get("/:id", async (req, res) => {
       .where("post_id", postId)
       .select("comment.*", "user.name as user_name");
 
-    res.status(200).json({ msg: "Found the comments", comments });
+    console.log(comments);
+
+    if (!comments.comment) {
+      res.status(204).json({ msg: "No comments for this post" });
+    } else {
+      res.status(200).json({ msg: "Found the comments", comments });
+    }
   } catch (error) {
     res.status(404).json({ msg: `Could not find comments: ${error}` });
   }

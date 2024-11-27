@@ -67,7 +67,6 @@ router.get("/:id", async (req, res) => {
   const postId = req.params.id;
   try {
     const post = await knex("post")
-      .leftJoin("comment", "post.id", "comment.post_id")
       .leftJoin("camera", "post.camera_id", "camera.id")
       .select(
         "post.id as post_id",
@@ -84,15 +83,7 @@ router.get("/:id", async (req, res) => {
         "camera_year as camera_year",
         "camera_brand as camera_brand"
       )
-      .select(
-        knex.raw(`JSON_ARRAYAGG(
-        JSON_OBJECT(
-          'comment_id', comment.id,
-          'user_id', comment.user_id,
-          'text', comment.comment
-        )
-      ) AS comments`)
-      )
+
       .where("post.id", postId)
       .groupBy(
         "post.id",
