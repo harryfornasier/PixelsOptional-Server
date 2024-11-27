@@ -88,7 +88,7 @@ router.get("/profile/:id", async (req, res) => {
       .select("camera.*", "post.*", "user.name");
 
     delete user.password;
-    res.status(200).json({ user: user, posts: posts });
+    res.status(200).json({ user: user.name, posts: posts });
   } catch (error) {
     res.status(404).json({ msg: `Could not find user: ${error}` });
   }
