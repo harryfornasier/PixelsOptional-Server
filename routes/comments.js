@@ -33,8 +33,6 @@ router.get("/:id", async (req, res) => {
       .where("post_id", postId)
       .select("comment.*", "user.name as user_name");
 
-    console.log(comments);
-
     if (!comments.length) {
       res.status(204).json({ msg: "No comments for this post" });
     } else {
