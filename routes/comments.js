@@ -28,7 +28,11 @@ router.post("/", authorise, async (req, res) => {
 router.get("/:id", async (req, res) => {
   const postId = req.params.id;
   try {
-    const comments = await knex("comment").where("post_id", postId);
+    const comments = await knex("comment")
+      .leftJoin("user", "user.id", "comment.user_id")
+      .where("post_id", postId)
+      .select("comment.*", "user.name as user_name");
+
     res.status(200).json({ msg: "Found the comments", comments });
   } catch (error) {
     res.status(404).json({ msg: `Could not find comments: ${error}` });
