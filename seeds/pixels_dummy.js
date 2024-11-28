@@ -28,7 +28,7 @@ function createPostsDummy() {
     return num % 2;
   }
   for (let i = 0; i <= 42; i++) {
-    const ratio = "";
+    let ratio = "";
     if (isOdd(i)) {
       ratio = "300/200";
     } else {
