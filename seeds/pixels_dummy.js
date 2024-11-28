@@ -25,13 +25,17 @@ let postData = [];
 
 function createPostsDummy() {
   for (let i = 0; i <= 42; i++) {
+    const ratio = "200/300";
+    if (isOdd(i)) {
+      ratio = "300/200";
+    }
     postData.push({
       id: i,
       title: `Post Number ${i}`,
       content: `This is the content of post number ${i}.`,
       user_id: 1,
       like: Math.floor(Math.random() * 50) + 1,
-      image_url: `https://picsum.photos/id/${i}/200/300`,
+      image_url: `https://picsum.photos/id/${i}/${ratio}`,
       camera_id: 1,
     });
   }
