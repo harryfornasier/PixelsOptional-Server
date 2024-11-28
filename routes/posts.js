@@ -55,7 +55,9 @@ router.get("/", async (_req, res) => {
     const posts = await knex("camera")
       .join("post", "camera.id", "post.camera_id")
       .join("user", "user.id", "post.user_id") // Join with the 'user' table
-      .select("camera.*", "post.*", "user.name");
+      .select("camera.*", "post.*", "user.name")
+      .limit(10)
+      .offset(5);
 
     res.json(posts);
   } catch (error) {
@@ -68,8 +70,6 @@ router.get("/:id", async (req, res) => {
   try {
     const post = await knex("post")
       .leftJoin("camera", "post.camera_id", "camera.id")
-      .limit(10)
-      .offset(5)
       .select(
         "post.id as post_id",
         "post.created_at",
