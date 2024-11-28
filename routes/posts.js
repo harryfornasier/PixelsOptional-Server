@@ -68,6 +68,8 @@ router.get("/:id", async (req, res) => {
   try {
     const post = await knex("post")
       .leftJoin("camera", "post.camera_id", "camera.id")
+      .limit(10)
+      .offset(5)
       .select(
         "post.id as post_id",
         "post.created_at",
@@ -83,7 +85,6 @@ router.get("/:id", async (req, res) => {
         "camera_year as camera_year",
         "camera_brand as camera_brand"
       )
-
       .where("post.id", postId)
       .groupBy(
         "post.id",
