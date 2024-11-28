@@ -51,13 +51,14 @@ router.post("/", [authorise, upload.single("image")], async (req, res) => {
 });
 
 router.get("/", async (_req, res) => {
+  const offset = req.body.page * 21;
   try {
     const posts = await knex("camera")
       .join("post", "camera.id", "post.camera_id")
       .join("user", "user.id", "post.user_id") // Join with the 'user' table
       .select("camera.*", "post.*", "user.name")
-      .limit(10)
-      .offset(5);
+      .limit(21)
+      .offset(offset);
 
     res.json(posts);
   } catch (error) {
