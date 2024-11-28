@@ -26,7 +26,7 @@ const upload = multer({
 router.post("/", [authorise, upload.single("image")], async (req, res) => {
   const newUuid = uuidv4();
   const path = `./images/${newUuid}.jpg`;
-  const src = `https://harrisonfornasier.space/static/${newUuid}.jpg`;
+  const src = `https://harrisonfornasier.uk/static/${newUuid}.jpg`;
   try {
     sharp(req.file.buffer)
       .resize(1440, 1050, {
