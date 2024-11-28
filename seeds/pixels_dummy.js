@@ -24,6 +24,9 @@ const userData = [
 let postData = [];
 
 function createPostsDummy() {
+  function isOdd(num) {
+    return num % 2;
+  }
   for (let i = 0; i <= 42; i++) {
     const ratio = "";
     if (isOdd(i)) {
