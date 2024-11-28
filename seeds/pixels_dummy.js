@@ -21,28 +21,21 @@ const userData = [
     admin: false,
   },
 ];
-const postData = [
-  {
-    id: 1,
-    title: "First Post",
-    content: "Hello world!",
-    user_id: 2,
-    like: 5,
-    image_url:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Dhole%28Asiatic_wild_dog%29.jpg/640px-Dhole%28Asiatic_wild_dog%29.jpg",
-    camera_id: 1,
-  },
-  {
-    id: 2,
-    title: "Second Post",
-    content: "Hello another world!",
-    user_id: 3,
-    like: 11,
-    image_url:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Canis_lupus_familiaris.001_-_Monfero.jpg/640px-Canis_lupus_familiaris.001_-_Monfero.jpg",
-    camera_id: 1,
-  },
-];
+let postData = [];
+
+function createPostsDummy() {
+  for (let i = 0; i <= 42; i++) {
+    postData.push({
+      id: i,
+      title: `Post Number ${i}`,
+      content: `This is the content of post number ${i}.`,
+      user_id: 1,
+      like: Math.floor(Math.random() * 50) + 1,
+      image_url: `https://picsum.photos/200/300`,
+      camera_id: 1,
+    });
+  }
+}
 
 const cameraData = [
   {
@@ -54,6 +47,7 @@ const cameraData = [
 ];
 
 export async function seed(knex) {
+  createPostsDummy();
   await knex("user").del();
   await knex("user").insert(userData);
   await knex("camera").del();

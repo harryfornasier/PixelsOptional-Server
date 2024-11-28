@@ -50,8 +50,8 @@ router.post("/", [authorise, upload.single("image")], async (req, res) => {
   }
 });
 
-router.get("/", async (_req, res) => {
-  const offset = req.body.page * 21;
+router.get("/", async (req, res) => {
+  const offset = req.body.page * 21 - 21;
   try {
     const posts = await knex("camera")
       .join("post", "camera.id", "post.camera_id")
