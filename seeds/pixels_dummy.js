@@ -30,9 +30,9 @@ function createPostsDummy() {
   for (let i = 0; i <= 42; i++) {
     let ratio = "";
     if (isOdd(i)) {
-      ratio = "300/200";
+      ratio = "1440/1050";
     } else {
-      ratio = "200/300";
+      ratio = "1050/1440";
     }
     postData.push({
       id: i,
