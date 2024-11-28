@@ -32,6 +32,7 @@ router.post("/", [authorise, upload.single("image")], async (req, res) => {
       .resize(1440, 1050, {
         fit: "cover",
       })
+      .rotate()
       .toFormat("jpg")
       .toFile(path);
     const imageData = {
