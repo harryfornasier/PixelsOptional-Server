@@ -51,7 +51,7 @@ router.post("/", [authorise, upload.single("image")], async (req, res) => {
 });
 
 router.get("/", async (req, res) => {
-  console.log(req.body);
+  console.log(req.body.page);
   const offset = parseInt(req.body.page) * 21 - 21;
   try {
     const posts = await knex("camera")
