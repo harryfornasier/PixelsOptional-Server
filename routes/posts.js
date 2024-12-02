@@ -23,10 +23,13 @@ const upload = multer({
   },
 });
 
-router.post("/", [authorise, upload.single("image")], async (req, res) => {
-  if (err instanceof multer.MulterError) {
-    res.status(400).send({ msg: "too big" });
-  } else {
+router.post("/", authorise, async (req, res) => {
+  upload(req, res, function (err) {
+    if (err instanceof multer.MulterError) {
+      res.status(400).send("waaaaaaaa")
+    } else if (err) {
+      // An unknown error occurred when uploading.
+    }
     const newUuid = uuidv4();
     const path = `./images/${newUuid}.jpg`;
     const src = `https://harrisonfornasier.uk/static/${newUuid}.jpg`;
@@ -52,7 +55,6 @@ router.post("/", [authorise, upload.single("image")], async (req, res) => {
       console.log(error);
       res.status(400).send(error);
     }
-  }
 });
 
 router.get("/", async (req, res) => {
