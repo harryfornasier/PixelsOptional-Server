@@ -120,7 +120,7 @@ router.get("/:id", async (req, res) => {
 router.patch("/:id", authorise, async (req, res) => {
   const postId = req.params.id;
   const receivingUser = req.body.foreignUser;
-  console.log(req.body);
+  console.log(postId);
   try {
     const alreadyLiked = await knex("post_like")
       .where({ user_id: req.token.id, post_id: postId })
