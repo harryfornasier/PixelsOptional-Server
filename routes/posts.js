@@ -21,15 +21,44 @@ const upload = multer({
     }
     cb(undefined, true);
   },
-});
+}).single("image");
 
-router.post("/", authorise, async (req, res) => {
-  upload(req, res, function (err) {
+// router.post("/", [authorise, upload], async (req, res) => {
+//   const newUuid = uuidv4();
+//   const path = `./images/${newUuid}.jpg`;
+//   const src = `https://harrisonfornasier.uk/static/${newUuid}.jpg`;
+
+//   try {
+//     sharp(req.file.buffer)
+//       .resize(1440, 1050, {
+//         fit: "cover",
+//       })
+//       .toFormat("jpg")
+//       .withMetadata()
+//       .toFile(path);
+//     const imageData = {
+//       user_id: req.token.id,
+//       title: req.body.title,
+//       content: "",
+//       image_url: src,
+//       camera_id: 1,
+//     };
+//     const newPost = await knex("post").insert(imageData);
+//     res.status(201).send({ msg: "Image uploaded succesfully", newPost });
+//   } catch (error) {
+//     console.log(error);
+//     res.status(400).send(error);
+//   }
+// });
+
+router.post("/", async function (req, res) {
+  upload(req, res, async function (err) {
     if (err instanceof multer.MulterError) {
-      res.status(400).send("waaaaaaaa")
+      res.status(413).json({ msg: "Image too large" });
     } else if (err) {
-      // An unknown error occurred when uploading.
+      res.status(500).json({ msg: "Unknown error" });
     }
+
     const newUuid = uuidv4();
     const path = `./images/${newUuid}.jpg`;
     const src = `https://harrisonfornasier.uk/static/${newUuid}.jpg`;
@@ -55,6 +84,7 @@ router.post("/", authorise, async (req, res) => {
       console.log(error);
       res.status(400).send(error);
     }
+  });
 });
 
 router.get("/", async (req, res) => {
