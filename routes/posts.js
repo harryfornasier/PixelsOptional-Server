@@ -133,8 +133,11 @@ router.patch("/:id", authorise, async (req, res) => {
       if (givingUser.pot < 1) {
         res.status(403).json({ msg: "You don't have enough likes in your pot" });
       } else {
-        const likes = await knex("post_like");
-        console.log(likes);
+        const user = await knex("user").where({ id: givingUser }).first();
+        const post = await knex("post").where({ id: postId }).first();
+
+        console.log(user, post);
+
         const like = await knex("post_like").insert({
           user_id: givingUserId,
           post_id: postId,
@@ -147,8 +150,8 @@ router.patch("/:id", authorise, async (req, res) => {
           .increment("like")
           .increment("pot")
           .where("user.id", receivingUser);
+        res.status(200).json({ msg: "Liked the image" });
       }
-      res.status(200).json({ msg: "Liked the image" });
     }
   } catch (error) {
     res.status(500).json({ msg: "Unknown error", error });
