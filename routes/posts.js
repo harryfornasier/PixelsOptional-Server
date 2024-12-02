@@ -120,7 +120,6 @@ router.get("/:id", async (req, res) => {
 router.patch("/:id", authorise, async (req, res) => {
   const postId = req.params.id;
   const receivingUser = req.body.foreignUser;
-  console.log(req.body);
   try {
     const alreadyLiked = await knex("post_like")
       .where({ user_id: req.token.id, post_id: postId })
@@ -148,7 +147,9 @@ router.patch("/:id", authorise, async (req, res) => {
       }
       res.status(200).json({ msg: "Liked the image" });
     }
-  } catch (error) {}
+  } catch (error) {
+    res.status(500).json({ msg: "Unknown error", error });
+  }
 });
 
 export default router;
