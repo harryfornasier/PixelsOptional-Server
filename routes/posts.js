@@ -78,7 +78,6 @@ router.get("/", async (req, res) => {
         .groupBy("camera.id", "post.id", "user.id") // Group by necessary columns
         .limit(21)
         .offset(offset);
-      res.send(200).json(posts);
     } else {
       const posts = await knex("camera")
         .join("post", "camera.id", "post.camera_id")
@@ -101,8 +100,8 @@ router.get("/", async (req, res) => {
         .groupBy("camera.id", "post.id", "user.id") // Group by necessary columns
         .limit(21)
         .offset(offset);
-      res.send(200).json(posts);
     }
+    res.send(200).json(posts);
   } catch (error) {
     res.status(500).json({ mesesage: `Error fetching from database: ${error}` });
   }
