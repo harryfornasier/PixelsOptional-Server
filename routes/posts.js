@@ -144,9 +144,9 @@ router.patch("/:id", authorise, async (req, res) => {
 
         const givingUserDecrease = await knex("user")
           .increment("pot", -1)
-          .where("user.id", req.token.id);
+          .where("user.id", givingUserId);
         const recievingUserUpdate = await knex("user")
-          .increment("like")
+          .increment("likes")
           .increment("pot")
           .where("user.id", receivingUser);
         res.status(200).json({ msg: "Liked the image" });
