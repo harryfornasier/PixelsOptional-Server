@@ -62,7 +62,7 @@ router.post("/", authorise, async function (req, res) {
 router.get("/", async (req, res) => {
   const offset = parseInt(req.query.page) * 21 - 21;
   const userId = req.query.userId;
-  console.log(offset);
+  console.log(userId);
   try {
     if (!userId) {
       const posts = await knex("camera")
