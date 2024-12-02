@@ -10,6 +10,7 @@ const PORT = process.env.PORT;
 
 app.use(express.json());
 app.use("/static", express.static("images"));
+app.use("/icons", express.static("icons"));
 
 //Cors for testing only!
 app.use(cors());
