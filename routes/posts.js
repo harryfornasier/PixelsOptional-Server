@@ -51,7 +51,7 @@ const upload = multer({
 //   }
 // });
 
-router.post("/", async function (req, res) {
+router.post("/", authorise, async function (req, res) {
   upload(req, res, async function (err) {
     if (err instanceof multer.MulterError) {
       res.status(413).json({ msg: "Image too large" });
