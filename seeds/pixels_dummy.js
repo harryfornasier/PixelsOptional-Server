@@ -4,6 +4,8 @@ const userData = [
     name: "Harrison",
     email: "harry@gmail.com",
     password: "$2b$08$C5g2th6VkjZyqdOwTehx4OcyaQ.Odet5iLGc0R/D2wLlEXX94gaum",
+    pot: 100,
+    likes: 0,
     admin: false,
   },
   {
@@ -11,6 +13,8 @@ const userData = [
     name: "John",
     email: "john@gmail.com",
     password: "$2b$08$C5g2th6VkjZyqdOwTehx4OcyaQ.Odet5iLGc0R/D2wLlEXX94gaum",
+    pot: 100,
+    likes: 0,
     admin: false,
   },
   {
@@ -18,6 +22,8 @@ const userData = [
     name: "Jessica",
     email: "jessica@gmail.com",
     password: "$2b$08$C5g2th6VkjZyqdOwTehx4OcyaQ.Odet5iLGc0R/D2wLlEXX94gaum",
+    pot: 100,
+    likes: 0,
     admin: false,
   },
 ];

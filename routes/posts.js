@@ -23,34 +23,6 @@ const upload = multer({
   },
 }).single("image");
 
-// router.post("/", [authorise, upload], async (req, res) => {
-//   const newUuid = uuidv4();
-//   const path = `./images/${newUuid}.jpg`;
-//   const src = `https://harrisonfornasier.uk/static/${newUuid}.jpg`;
-
-//   try {
-//     sharp(req.file.buffer)
-//       .resize(1440, 1050, {
-//         fit: "cover",
-//       })
-//       .toFormat("jpg")
-//       .withMetadata()
-//       .toFile(path);
-//     const imageData = {
-//       user_id: req.token.id,
-//       title: req.body.title,
-//       content: "",
-//       image_url: src,
-//       camera_id: 1,
-//     };
-//     const newPost = await knex("post").insert(imageData);
-//     res.status(201).send({ msg: "Image uploaded succesfully", newPost });
-//   } catch (error) {
-//     console.log(error);
-//     res.status(400).send(error);
-//   }
-// });
-
 router.post("/", authorise, async function (req, res) {
   upload(req, res, async function (err) {
     if (err instanceof multer.MulterError) {
@@ -143,6 +115,40 @@ router.get("/:id", async (req, res) => {
   } catch (error) {
     res.status(400).send(error);
   }
+});
+
+router.patch("/:id", authorise, async (req, res) => {
+  const postId = req.params.id;
+  const receivingUser = req.body.foreignUser;
+
+  try {
+    const alreadyLiked = await knex("post_like")
+      .where({ user_id: req.token.id, post_id: postId })
+      .first();
+
+    if (alreadyLiked) {
+      //undo
+    } else {
+      const givingUser = await knex("user").where("user.id", req.token.id);
+      if (givingUser.pot < 1) {
+        res.status(403).json({ msg: "You don't have enough likes in your pot" });
+      } else {
+        const like = await knex("post_like").insert({
+          user_id: req.token.id,
+          post_id: postId,
+        });
+
+        const givingUserDecrease = await knex("user")
+          .increment("pot", -1)
+          .where("user.id", req.token.id);
+        const recievingUserUpdate = await knex("user")
+          .increment("like")
+          .increment("pot")
+          .where("user.id", receivingUser);
+      }
+      res.status(200).json({ msg: "Liked the image" });
+    }
+  } catch (error) {}
 });
 
 export default router;

@@ -5,6 +5,8 @@ export function up(knex) {
       table.string("name").notNullable();
       table.string("email").notNullable();
       table.string("password").notNullable();
+      table.integer("likes").notNullable();
+      table.integer("pot").notNullable();
       table.boolean("admin").notNullable();
     })
     .createTable("camera", (table) => {
@@ -19,7 +21,6 @@ export function up(knex) {
       table.timestamp("updated_at").defaultTo(knex.fn.now());
       table.integer("user_id").unsigned().notNullable();
       table.string("title", 30).notNullable();
-      table.integer("like").unsigned().defaultTo(0);
       table.integer("comment_count").unsigned().defaultTo(0);
       table.string("content");
       table.string("image_url").notNullable();
@@ -49,6 +50,22 @@ export function up(knex) {
         .onUpdate("CASCADE")
         .onDelete("CASCADE");
       table.string("comment").notNullable();
+    })
+    .createTable("post_like", (table) => {
+      table.integer("user_id").unsigned().notNullable();
+      table
+        .foreign("user_id")
+        .references("id")
+        .inTable("user")
+        .onUpdate("CASCADE")
+        .onDelete("CASCADE");
+      table.integer("post_id").unsigned().notNullable();
+      table
+        .foreign("post_id")
+        .references("id")
+        .inTable("post")
+        .onUpdate("CASCADE")
+        .onDelete("CASCADE");
     });
 }
 
