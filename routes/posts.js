@@ -121,7 +121,6 @@ router.patch("/:id", authorise, async (req, res) => {
   const postId = parseInt(req.params.id);
   const givingUserId = parseInt(req.token.id);
   const receivingUser = req.body.foreignUser;
-  console.log(givingUserId);
   try {
     const alreadyLiked = await knex("post_like")
       .where({ user_id: givingUserId, post_id: postId })
@@ -134,6 +133,8 @@ router.patch("/:id", authorise, async (req, res) => {
       if (givingUser.pot < 1) {
         res.status(403).json({ msg: "You don't have enough likes in your pot" });
       } else {
+        const likes = await knex("post_like");
+        console.log(likes);
         const like = await knex("post_like").insert({
           user_id: givingUserId,
           post_id: postId,
