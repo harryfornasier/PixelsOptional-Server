@@ -62,13 +62,6 @@ router.post("/", authorise, async function (req, res) {
 router.get("/", async (req, res) => {
   const offset = parseInt(req.query.page) * 21 - 21;
   try {
-    // const posts = await knex("camera")
-    //   .join("post", "camera.id", "post.camera_id")
-    //   .join("user", "user.id", "post.user_id") // Join with the 'user' table
-    //   .select("camera.*", "post.*", "user.name")
-    //   .limit(21)
-    //   .offset(offset);
-
     const posts = await knex("camera")
       .join("post", "camera.id", "post.camera_id")
       .join("user", "user.id", "post.user_id") // Join with the 'user' table

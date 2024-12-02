@@ -54,7 +54,7 @@ router.post("/login", async (req, res) => {
         { expiresIn: "30d" }
       );
 
-      res.status(200).json({ authToken: token });
+      res.status(200).json({ authToken: token, id: user.id });
     });
   } catch (error) {
     res.status(400).json({ message: "User not found" });
