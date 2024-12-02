@@ -57,32 +57,32 @@ router.post("/", authorise, async function (req, res) {
       res.status(413).json({ msg: "Image too large" });
     } else if (err) {
       res.status(500).json({ msg: "Unknown error" });
-    }
+    } else {
+      const newUuid = uuidv4();
+      const path = `./images/${newUuid}.jpg`;
+      const src = `https://harrisonfornasier.uk/static/${newUuid}.jpg`;
 
-    const newUuid = uuidv4();
-    const path = `./images/${newUuid}.jpg`;
-    const src = `https://harrisonfornasier.uk/static/${newUuid}.jpg`;
-
-    try {
-      sharp(req.file.buffer)
-        .resize(1440, 1050, {
-          fit: "cover",
-        })
-        .toFormat("jpg")
-        .withMetadata()
-        .toFile(path);
-      const imageData = {
-        user_id: req.token.id,
-        title: req.body.title,
-        content: "",
-        image_url: src,
-        camera_id: 1,
-      };
-      const newPost = await knex("post").insert(imageData);
-      res.status(201).send({ msg: "Image uploaded succesfully", newPost });
-    } catch (error) {
-      console.log(error);
-      res.status(400).send(error);
+      try {
+        sharp(req.file.buffer)
+          .resize(1440, 1050, {
+            fit: "cover",
+          })
+          .toFormat("jpg")
+          .withMetadata()
+          .toFile(path);
+        const imageData = {
+          user_id: req.token.id,
+          title: req.body.title,
+          content: "",
+          image_url: src,
+          camera_id: 1,
+        };
+        const newPost = await knex("post").insert(imageData);
+        res.status(201).send({ msg: "Image uploaded succesfully", newPost });
+      } catch (error) {
+        console.log(error);
+        res.status(400).send(error);
+      }
     }
   });
 });
