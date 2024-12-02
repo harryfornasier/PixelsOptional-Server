@@ -62,10 +62,24 @@ router.post("/", authorise, async function (req, res) {
 router.get("/", async (req, res) => {
   const offset = parseInt(req.query.page) * 21 - 21;
   try {
+    // const posts = await knex("camera")
+    //   .join("post", "camera.id", "post.camera_id")
+    //   .join("user", "user.id", "post.user_id") // Join with the 'user' table
+    //   .select("camera.*", "post.*", "user.name")
+    //   .limit(21)
+    //   .offset(offset);
+
     const posts = await knex("camera")
       .join("post", "camera.id", "post.camera_id")
       .join("user", "user.id", "post.user_id") // Join with the 'user' table
-      .select("camera.*", "post.*", "user.name")
+      .leftJoin("post_like", "post.id", "post_like.post_id") // Join with the 'post_like' table
+      .select(
+        "camera.*",
+        "post.*",
+        "user.name",
+        knex.raw("COUNT(post_like.post_id) as like_count") // Count likes for each post
+      )
+      .groupBy("camera.id", "post.id", "user.id") // Group by necessary columns
       .limit(21)
       .offset(offset);
 
@@ -80,20 +94,21 @@ router.get("/:id", async (req, res) => {
   try {
     const post = await knex("post")
       .leftJoin("camera", "post.camera_id", "camera.id")
+      .leftJoin("post_like", "post.id", "post_like.post_id")
       .select(
         "post.id as post_id",
         "post.created_at",
         "post.updated_at",
         "post.user_id",
         "post.title",
-        "post.like",
         "post.comment_count",
         "post.content",
         "post.image_url",
         "camera.id as camera_id",
         "camera_model as camera_model",
         "camera_year as camera_year",
-        "camera_brand as camera_brand"
+        "camera_brand as camera_brand",
+        knex.raw("COUNT(post_like.user_id) as like_count")
       )
       .where("post.id", postId)
       .groupBy(
@@ -102,7 +117,6 @@ router.get("/:id", async (req, res) => {
         "post.updated_at",
         "post.user_id",
         "post.title",
-        "post.like",
         "post.comment_count",
         "post.content",
         "post.image_url",
