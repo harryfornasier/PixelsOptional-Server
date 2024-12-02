@@ -27,7 +27,7 @@ router.post("/register", (req, res) => {
         admin: false,
       });
 
-      const newUser = await knex("user").where({ id: newUserTemp[0] }).first();
+      const newUser = await knex("user").insert(newUserTemp);
 
       res.status(201).json({ msg: `New User with id ${newUser.id} Created` });
     } catch (error) {
