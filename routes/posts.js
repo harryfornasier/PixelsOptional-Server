@@ -118,7 +118,7 @@ router.get("/:id", async (req, res) => {
 });
 
 router.patch("/:id", authorise, async (req, res) => {
-  const postId = req.params.id;
+  const postId = parseInt(req.params.id);
   const givingUserId = parseInt(req.token.id);
   const receivingUser = req.body.foreignUser;
   console.log(givingUserId);
