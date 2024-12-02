@@ -62,7 +62,7 @@ const cameraData = [
 ];
 
 export async function seed(knex) {
-  createPostsDummy();
+  await createPostsDummy();
   await knex("user").del();
   await knex("user").insert(userData);
   await knex("camera").del();
