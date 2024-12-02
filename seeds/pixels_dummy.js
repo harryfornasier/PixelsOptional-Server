@@ -45,7 +45,6 @@ function createPostsDummy() {
       title: `Post Number ${i}`,
       content: `This is the content of post number ${i}.`,
       user_id: 1,
-      like: Math.floor(Math.random() * 50) + 1,
       image_url: `https://picsum.photos/id/${i}/${ratio}`,
       camera_id: 1,
     });
