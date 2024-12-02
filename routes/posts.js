@@ -118,6 +118,7 @@ router.get("/:id", async (req, res) => {
 });
 
 router.patch("/:id", authorise, async (req, res) => {
+  console.log("here");
   const postId = req.params.id;
   const receivingUser = req.body.foreignUser;
 
