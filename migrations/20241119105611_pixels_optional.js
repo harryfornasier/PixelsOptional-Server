@@ -71,6 +71,7 @@ export function up(knex) {
 
 export function down(knex) {
   return knex.schema
+    .dropTable("post_like")
     .dropTable("comment")
     .dropTable("post")
     .dropTable("camera")
