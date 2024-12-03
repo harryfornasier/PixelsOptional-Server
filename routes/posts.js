@@ -186,4 +186,20 @@ router.patch("/:id", authorise, async (req, res) => {
   }
 });
 
+router.delete("/:id", authorise, async (req, res) => {
+  postId = req.params.id;
+  try {
+    const user = await knex("user").where("id", req.token.id);
+
+    if (user.admin != 1) {
+      res.status(403).json({ msg: "You're not allowed to delete posts" });
+    } else {
+      const deletePost = await knex("post").where("id", postId).del();
+      res.status(204).json({ msg: "Deleted post" });
+    }
+  } catch (error) {
+    res.status(500).json({ msg: "Unknown error occured" + error });
+  }
+});
+
 export default router;
