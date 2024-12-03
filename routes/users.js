@@ -21,7 +21,7 @@ router.post("/register", (req, res) => {
     try {
       const checkUser = await knex("user").where("user.email", req.body.email);
 
-      if (checkUser) {
+      if (checkUser.length) {
         res.status(409).json({ msg: "Account already exisits, try logging in" });
       } else {
         const newUserTemp = await knex("user").insert({
