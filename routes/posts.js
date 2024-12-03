@@ -39,8 +39,8 @@ router.post("/", authorise, async function (req, res) {
           .resize(1440, 1050, {
             fit: "cover",
           })
+          .rotate()
           .toFormat("jpg")
-          .withMetadata()
           .toFile(path);
         const imageData = {
           user_id: req.token.id,
