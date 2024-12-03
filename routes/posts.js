@@ -40,7 +40,7 @@ router.post("/", authorise, async function (req, res) {
             fit: "cover",
           })
           .toFormat("jpg")
-          .withMetadata()
+          .keepMetadata()
           .toFile(path);
         const imageData = {
           user_id: req.token.id,
