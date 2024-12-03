@@ -62,33 +62,32 @@ router.post("/", authorise, async function (req, res) {
 router.get("/", async (req, res) => {
   const offset = parseInt(req.query.page) * 21 - 21;
   const userId = req.query.userId;
-  console.log(userId);
   try {
     if (!userId) {
       const posts = await knex("camera")
         .join("post", "camera.id", "post.camera_id")
-        .join("user", "user.id", "post.user_id") // Join with the 'user' table
-        .leftJoin("post_like", "post.id", "post_like.post_id") // Join with the 'post_like' table
+        .join("user", "user.id", "post.user_id")
+        .leftJoin("post_like", "post.id", "post_like.post_id")
         .select(
           "camera.*",
           "post.*",
           "user.name",
-          knex.raw("COUNT(post_like.post_id) as like_count") // Count likes for each post
+          knex.raw("COUNT(post_like.post_id) as like_count")
         )
-        .groupBy("camera.id", "post.id", "user.id") // Group by necessary columns
+        .groupBy("camera.id", "post.id", "user.id")
         .limit(21)
         .offset(offset);
       res.status(200).json(posts);
     } else {
       const posts = await knex("camera")
         .join("post", "camera.id", "post.camera_id")
-        .join("user", "user.id", "post.user_id") // Join with the 'user' table
-        .leftJoin("post_like", "post.id", "post_like.post_id") // Join with the 'post_like' table
+        .join("user", "user.id", "post.user_id")
+        .leftJoin("post_like", "post.id", "post_like.post_id")
         .select(
           "camera.*",
           "post.*",
           "user.name",
-          knex.raw("COUNT(post_like.post_id) as like_count"), // Count likes for each post
+          knex.raw("COUNT(post_like.post_id) as like_count"),
           knex.raw(`
       EXISTS (
         SELECT 1
@@ -96,9 +95,9 @@ router.get("/", async (req, res) => {
         WHERE post_like.post_id = post.id
           AND post_like.user_id = ${userId}
       ) AS user_liked
-    `) // Check if the user has liked the post
+    `)
         )
-        .groupBy("camera.id", "post.id", "user.id") // Group by necessary columns
+        .groupBy("camera.id", "post.id", "user.id")
         .limit(21)
         .offset(offset);
       res.status(200).json(posts);
@@ -178,10 +177,7 @@ router.patch("/:id", authorise, async (req, res) => {
         const givingUserDecrease = await knex("user")
           .increment("pot", -1)
           .where("user.id", givingUserId);
-        const recievingUserUpdate = await knex("user")
-          .increment("likes")
-          .increment("pot")
-          .where("user.id", receivingUser);
+
         res.status(200).json({ msg: "Liked the image" });
       }
     }

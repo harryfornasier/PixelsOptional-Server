@@ -18,18 +18,22 @@ router.post("/register", (req, res) => {
     }
 
     try {
-      const newUserTemp = await knex("user").insert({
-        name: req.body.name,
-        email: req.body.email,
-        password: hashedPassword,
-        likes: 0,
-        pot: 100,
-        admin: false,
-      });
+      const checkUser = await knex("user").where("user.email", email);
 
-      const newUser = await knex("user").insert(newUserTemp);
+      if (checkUser) {
+        res.status(409).json({ msg: "Account already exisits, try logging in" });
+      } else {
+        const newUserTemp = await knex("user").insert({
+          name: req.body.name,
+          email: req.body.email,
+          password: hashedPassword,
+          likes: 0,
+          pot: 100,
+          admin: false,
+        });
 
-      res.status(201).json({ msg: `New User with id ${newUser.id} Created` });
+        res.status(201).json({ msg: `New User with id ${newUserTemp.id} Created` });
+      }
     } catch (error) {
       res.status(500).json({ msg: `Couldn't create user 😱: ${error.message}` });
     }
