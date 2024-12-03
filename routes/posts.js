@@ -16,7 +16,7 @@ const upload = multer({
   },
 
   fileFilter(req, file, cb) {
-    if (!file.originalname.match(/\.(jpg|jpeg|png|JPG)$/)) {
+    if (!file.originalname.match(/\.(jpg|jpeg|png|JPG|WebP)$/)) {
       return cb(new Error("Please upload a valid image file"));
     }
     cb(undefined, true);
@@ -28,7 +28,7 @@ router.post("/", authorise, async function (req, res) {
     if (err instanceof multer.MulterError) {
       res.status(413).json({ msg: "Image too large" });
     } else if (err) {
-      res.status(500).json({ msg: "Unknown error" });
+      res.status(500).json({ msg: "Unknown error" + err });
     } else {
       const newUuid = uuidv4();
       const path = `./images/${newUuid}.jpg`;
