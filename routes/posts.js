@@ -163,10 +163,6 @@ router.patch("/:id", authorise, async (req, res) => {
     } else {
       const givingUser = await knex("user").where("user.id", givingUserId).first();
 
-      console.log(givingUser);
-
-      console.log(receivingUser);
-
       if (givingUser.pot < 1) {
         res.status(403).json({ msg: "You don't have enough likes in your pot" });
       } else if (givingUser.id === receivingUser) {
