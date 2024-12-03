@@ -35,13 +35,7 @@ router.post("/", authorise, async function (req, res) {
       const src = `https://harrisonfornasier.uk/static/${newUuid}.jpg`;
 
       try {
-        sharp(req.file.buffer)
-          .keepExif()
-          .resize(1440, 1050, {
-            fit: "cover",
-          })
-          .toFormat("jpg")
-          .toFile(path);
+        sharp(req.file.buffer).toFormat("jpg").toFile(path);
         const imageData = {
           user_id: req.token.id,
           title: req.body.title,
