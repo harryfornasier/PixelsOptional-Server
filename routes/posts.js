@@ -36,7 +36,6 @@ router.post("/", authorise, async function (req, res) {
 
       try {
         const outputImage = await sharp(req.file.buffer)
-          .rotate()
           .resize(1440, 1050, {
             fit: "cover",
           })
