@@ -31,7 +31,7 @@ router.post("/", authorise, async function (req, res) {
       res.status(500).json({ msg: "Unknown error" });
     } else {
       const newUuid = uuidv4();
-      const landscape = false();
+      const landscape = false;
       const path = `./images/${newUuid}.jpg`;
       const src = `https://harrisonfornasier.uk/static/${newUuid}.jpg`;
 

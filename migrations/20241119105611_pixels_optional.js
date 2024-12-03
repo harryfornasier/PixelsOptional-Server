@@ -23,6 +23,7 @@ export function up(knex) {
       table.string("title", 30).notNullable();
       table.integer("comment_count").unsigned().defaultTo(0);
       table.string("content");
+      table.boolean("orientation");
       table.string("image_url").notNullable();
       table.integer("camera_id").unsigned().notNullable();
       table.foreign("camera_id").references("id").inTable("camera");
