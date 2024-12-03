@@ -192,7 +192,7 @@ router.delete("/:id", authorise, async (req, res) => {
     const user = await knex("user").where("id", req.token.id);
 
     console.log(user);
-    if (user.admin != 1) {
+    if (user.admin !== 1) {
       res.status(403).json({ msg: "You're not allowed to delete posts" });
     } else {
       const deletePost = await knex("post").where("id", postId).del();
