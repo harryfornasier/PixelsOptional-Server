@@ -31,6 +31,7 @@ router.post("/", authorise, async function (req, res) {
       res.status(500).json({ msg: "Unknown error" });
     } else {
       const newUuid = uuidv4();
+      const landscape = false();
       const path = `./images/${newUuid}.jpg`;
       const src = `https://harrisonfornasier.uk/static/${newUuid}.jpg`;
 
@@ -39,14 +40,20 @@ router.post("/", authorise, async function (req, res) {
           .keepMetadata()
           .toFormat("jpg")
           .toFile(path);
+
+        if (image.height > image.width) {
+          landscape = false;
+        } else {
+          landscape = true;
+        }
         const imageData = {
           user_id: req.token.id,
           title: req.body.title,
           content: "",
           image_url: src,
           camera_id: 1,
+          orientation: landscape,
         };
-        console.log(image);
         const newPost = await knex("post").insert(imageData);
         res.status(201).send({ msg: "Image uploaded succesfully", newPost });
       } catch (error) {
