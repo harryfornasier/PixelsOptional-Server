@@ -35,7 +35,10 @@ router.post("/", authorise, async function (req, res) {
       const src = `https://harrisonfornasier.uk/static/${newUuid}.jpg`;
 
       try {
-        sharp(req.file.buffer).keepMetadata().toFormat("jpg").toFile(path);
+        const image = await sharp(req.file.buffer)
+          .keepMetadata()
+          .toFormat("jpg")
+          .toFile(path);
         const imageData = {
           user_id: req.token.id,
           title: req.body.title,
@@ -43,6 +46,7 @@ router.post("/", authorise, async function (req, res) {
           image_url: src,
           camera_id: 1,
         };
+        console.log(image);
         const newPost = await knex("post").insert(imageData);
         res.status(201).send({ msg: "Image uploaded succesfully", newPost });
       } catch (error) {
