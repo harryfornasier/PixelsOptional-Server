@@ -58,8 +58,6 @@ router.post("/login", async (req, res) => {
         { expiresIn: "30d" }
       );
 
-      console.log(user);
-
       res.status(200).json({ authToken: token, id: user.id, admin: user.admin });
     });
   } catch (error) {
