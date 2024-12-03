@@ -187,7 +187,7 @@ router.patch("/:id", authorise, async (req, res) => {
 });
 
 router.delete("/:id", authorise, async (req, res) => {
-  postId = req.params.id;
+  const postId = req.params.id;
   try {
     const user = await knex("user").where("id", req.token.id);
 
