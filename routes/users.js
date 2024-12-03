@@ -17,7 +17,6 @@ router.post("/register", (req, res) => {
       return res.status(500).json({ message: "Encryption Failed" });
     }
 
-    console.log("here");
     try {
       const checkUser = await knex("user").where("user.email", req.body.email);
 
@@ -59,7 +58,9 @@ router.post("/login", async (req, res) => {
         { expiresIn: "30d" }
       );
 
-      res.status(200).json({ authToken: token, id: user.id });
+      console.log(user);
+
+      res.status(200).json({ authToken: token, id: user.id, admin: user.admin });
     });
   } catch (error) {
     res.status(400).json({ message: "User not found" });
