@@ -16,7 +16,7 @@ const upload = multer({
   },
 
   fileFilter(req, file, cb) {
-    if (!file.originalname.match(/\.(jpg|jpeg|png|JPG|webP)$/)) {
+    if (!file.originalname.match(/\.(jpg|jpeg|png|JPG)$/)) {
       return cb(new Error("Please upload a valid image file"));
     }
     cb(undefined, true);
@@ -28,19 +28,19 @@ router.post("/", authorise, async function (req, res) {
     if (err instanceof multer.MulterError) {
       res.status(413).json({ msg: "Image too large" });
     } else if (err) {
-      res.status(500).json({ msg: "Unknown error" + err });
+      res.status(500).json({ msg: "Unknown error" });
     } else {
       const newUuid = uuidv4();
       const path = `./images/${newUuid}.jpg`;
       const src = `https://harrisonfornasier.uk/static/${newUuid}.jpg`;
 
       try {
-        const outputImage = await sharp(req.file.buffer)
+        sharp(req.file.buffer)
           .resize(1440, 1050, {
             fit: "cover",
           })
           .toFormat("jpg")
-          .keepMetadata()
+          .withMetadata()
           .toFile(path);
         const imageData = {
           user_id: req.token.id,
@@ -49,7 +49,6 @@ router.post("/", authorise, async function (req, res) {
           image_url: src,
           camera_id: 1,
         };
-        console.log(outputImage);
         const newPost = await knex("post").insert(imageData);
         res.status(201).send({ msg: "Image uploaded succesfully", newPost });
       } catch (error) {
