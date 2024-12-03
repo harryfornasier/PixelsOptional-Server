@@ -80,6 +80,7 @@ router.get("/", async (req, res) => {
       res.status(200).json(posts);
     } else {
       const posts = await knex("camera")
+        .orderBy("created_at", "desc")
         .join("post", "camera.id", "post.camera_id")
         .join("user", "user.id", "post.user_id")
         .leftJoin("post_like", "post.id", "post_like.post_id")
