@@ -17,8 +17,9 @@ router.post("/register", (req, res) => {
       return res.status(500).json({ message: "Encryption Failed" });
     }
 
+    console.log("here");
     try {
-      const checkUser = await knex("user").where("user.email", email);
+      const checkUser = await knex("user").where("user.email", req.body.email);
 
       if (checkUser) {
         res.status(409).json({ msg: "Account already exisits, try logging in" });
