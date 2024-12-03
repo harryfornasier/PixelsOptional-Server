@@ -161,9 +161,10 @@ router.patch("/:id", authorise, async (req, res) => {
     if (alreadyLiked) {
       //undo
     } else {
-      const givingUser = await knex("user").where("user.id", givingUserId);
+      const givingUser = await knex("user").where("user.id", givingUserId).first();
 
-      console.log(givingUser.id);
+      console.log(givingUser);
+
       console.log(receivingUser);
 
       if (givingUser.pot < 1) {
