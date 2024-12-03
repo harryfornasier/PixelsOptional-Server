@@ -40,7 +40,7 @@ router.post("/", authorise, async function (req, res) {
           .resize(1440, 1050, {
             fit: "cover",
           })
-          .withExif()
+          .withMetadata()
           .toFormat("jpg")
           .toFile(path);
         const imageData = {
