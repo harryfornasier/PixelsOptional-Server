@@ -100,4 +100,17 @@ router.get("/profile/:id", async (req, res) => {
   }
 });
 
+router.patch("/profile/:id", authorise, async (req, res) => {
+  const userId = req.params.id;
+  const url = req.body.iconUrl;
+
+  try {
+    //const user = await knex("user").insert().where({ id: userId }).first();
+
+    res.status(200).json({ user: user.name, posts: posts });
+  } catch (error) {
+    res.status(404).json({ msg: `Could not find user: ${error}` });
+  }
+});
+
 export default router;
