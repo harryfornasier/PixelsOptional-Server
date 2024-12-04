@@ -47,4 +47,19 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+router.delete("/:id", authorise, async (req, res) => {
+  const postId = req.params.id;
+  try {
+    const post = await knex("post")
+      .increment("comment_count", -1)
+      .where("post.id", postId);
+    const commentDelete = await knex("comment")
+      .where("comment.user_id", req.token.id)
+      .del();
+    res.status(204).json({ msg: "Comment deleted" });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
 export default router;
