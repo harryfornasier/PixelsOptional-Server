@@ -73,12 +73,14 @@ router.get("/", async (req, res) => {
         .join("post", "camera.id", "post.camera_id")
         .join("user", "user.id", "post.user_id")
         .leftJoin("post_like", "post.id", "post_like.post_id")
+        .leftJoin("comment", "post.id", "comment.post_id")
         .select(
           "camera.*",
           "post.*",
           "user.name",
           "user.icon_url",
-          knex.raw("COUNT(post_like.post_id) as like_count")
+          knex.raw("COUNT(post_like.post_id) as like_count"),
+          knex.raw("COUNT(DISTINCT comment.id) as comment_count")
         )
         .groupBy("camera.id", "post.id", "user.id")
         .limit(21)
@@ -90,12 +92,14 @@ router.get("/", async (req, res) => {
         .join("post", "camera.id", "post.camera_id")
         .join("user", "user.id", "post.user_id")
         .leftJoin("post_like", "post.id", "post_like.post_id")
+        .leftJoin("comment", "post.id", "comment.post_id")
         .select(
           "camera.*",
           "post.*",
           "user.name",
           "user.icon_url",
           knex.raw("COUNT(post_like.post_id) as like_count"),
+          knex.raw("COUNT(DISTINCT comment.id) as comment_count"),
           knex.raw(`
       EXISTS (
         SELECT 1
