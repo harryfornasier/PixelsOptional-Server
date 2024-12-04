@@ -46,7 +46,7 @@ router.get("/:id", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   const postId = req.params.id;
-  const commentId = req.body.commentId;
+  const commentId = req.params.commentId;
   console.log(commentId);
   try {
     const commentDelete = await knex("comment")
