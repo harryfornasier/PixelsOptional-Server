@@ -121,6 +121,7 @@ router.get("/:id", async (req, res) => {
     const post = await knex("post")
       .leftJoin("camera", "post.camera_id", "camera.id")
       .leftJoin("post_like", "post.id", "post_like.post_id")
+      .leftJoin("comment", "post.id", "comment.post_id")
       .select(
         "post.id as post_id",
         "post.created_at",
@@ -135,7 +136,8 @@ router.get("/:id", async (req, res) => {
         "camera_model as camera_model",
         "camera_year as camera_year",
         "camera_brand as camera_brand",
-        knex.raw("COUNT(post_like.user_id) as like_count")
+        knex.raw("COUNT(DISTINCT post_like.user_id) as like_count"),
+        knex.raw("COUNT(DISTINCT comment.id) as comment_count")
       )
       .where("post.id", postId)
       .groupBy(
@@ -153,6 +155,7 @@ router.get("/:id", async (req, res) => {
         "camera_year",
         "camera_brand"
       );
+
     res.status(200).json({ msg: "Found post succesfully", post });
   } catch (error) {
     res.status(400).send(error);
