@@ -15,11 +15,15 @@ router.post("/", authorise, async (req, res) => {
     comment: req.body.comment,
   };
   try {
-    const updateCount = await knex("post")
-      .increment("comment_count", 1)
-      .where("post.id", postId);
-    const newComment = await knex("comment").insert(comment);
-    res.status(201).json({ msg: "comment uploaded succesfully", newComment });
+    if (!req.body.comment) {
+      res.status(400).json({ msg: "User tried to upload an empty comment" });
+    } else {
+      const updateCount = await knex("post")
+        .increment("comment_count", 1)
+        .where("post.id", postId);
+      const newComment = await knex("comment").insert(comment);
+      res.status(201).json({ msg: "comment uploaded succesfully", newComment });
+    }
   } catch (error) {
     res.status(400).send(error);
   }
