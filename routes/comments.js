@@ -32,7 +32,7 @@ router.get("/:id", async (req, res) => {
     const comments = await knex("comment")
       .leftJoin("user", "user.id", "comment.user_id")
       .where("post_id", postId)
-      .select("comment.*", "user.name as user_name");
+      .select("comment.*", "user.name as user_name", "user.icon_url as user.icon_url");
 
     if (!comments.length) {
       res.status(204).json({ msg: "No comments for this post" });
