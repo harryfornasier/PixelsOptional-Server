@@ -77,6 +77,7 @@ router.get("/", async (req, res) => {
           "camera.*",
           "post.*",
           "user.name",
+          "user.icon_url",
           knex.raw("COUNT(post_like.post_id) as like_count")
         )
         .groupBy("camera.id", "post.id", "user.id")
@@ -93,6 +94,7 @@ router.get("/", async (req, res) => {
           "camera.*",
           "post.*",
           "user.name",
+          "user.icon_url",
           knex.raw("COUNT(post_like.post_id) as like_count"),
           knex.raw(`
       EXISTS (
