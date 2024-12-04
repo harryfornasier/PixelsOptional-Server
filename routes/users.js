@@ -107,9 +107,9 @@ router.patch("/profile/:id", authorise, async (req, res) => {
   console.log(url);
 
   try {
-    //const user = await knex("user").insert().where({ id: userId }).first();
+    const user = await knex("user").insert({ icon: url }).where({ id: userId }).first();
 
-    res.status(200).json({ user: user.name, posts: posts });
+    res.status(200).json({ msg: "Successfully changes icon" });
   } catch (error) {
     res.status(404).json({ msg: `Could not find user: ${error}` });
   }
