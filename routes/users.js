@@ -91,7 +91,15 @@ router.get("/profile/:id", async (req, res) => {
       .join("post", "camera.id", "post.camera_id")
       .where("post.user_id", userId)
       .join("user", "user.id", "post.user_id")
-      .select("camera.*", "post.*", "user.name");
+      .select("camera.*", "post.*", "user.name")
+      .leftJoin("post_like", "post.id", "post_like.post_id")
+      .select(
+        "camera.*",
+        "post.*",
+        "user.name",
+        "user.icon_url",
+        knex.raw("COUNT(post_like.post_id) as like_count")
+      );
 
     delete user.password;
     delete user.email;
