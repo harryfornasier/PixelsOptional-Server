@@ -5,7 +5,7 @@ export function up(knex) {
       table.string("name").notNullable();
       table.string("email").notNullable();
       table.string("password").notNullable();
-      table.integer("icon").notNullable();
+      table.string("icon_url").notNullable();
       table.integer("likes").notNullable();
       table.integer("pot").notNullable();
       table.boolean("admin").notNullable();
@@ -68,16 +68,11 @@ export function up(knex) {
         .inTable("post")
         .onUpdate("CASCADE")
         .onDelete("CASCADE");
-    })
-    .createTable("icon", (table) => {
-      table.increments("id");
-      table.string("name").notNullable();
     });
 }
 
 export function down(knex) {
   return knex.schema
-    .dropTable("icon")
     .dropTable("post_like")
     .dropTable("comment")
     .dropTable("post")
