@@ -80,6 +80,7 @@ export function up(knex) {
 
 export function down(knex) {
   return knex.schema
+    .dropTable("icon")
     .dropTable("post_like")
     .dropTable("comment")
     .dropTable("post")
