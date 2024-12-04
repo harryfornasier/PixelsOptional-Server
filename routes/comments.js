@@ -18,9 +18,6 @@ router.post("/", authorise, async (req, res) => {
     if (!req.body.comment) {
       res.status(400).json({ msg: "User tried to upload an empty comment" });
     } else {
-      const updateCount = await knex("post")
-        .increment("comment_count", 1)
-        .where("post.id", postId);
       const newComment = await knex("comment").insert(comment);
       res.status(201).json({ msg: "comment uploaded succesfully", newComment });
     }
@@ -51,9 +48,6 @@ router.delete("/:id", async (req, res) => {
   const postId = req.params.id;
   const commentId = req.body.commentId;
   try {
-    const post = await knex("post")
-      .increment("comment_count", -1)
-      .where("post.id", postId);
     const commentDelete = await knex("comment")
       .where("comment.id", commentId)
       .andWhere("comment.user_id", req.token.id)
