@@ -100,7 +100,8 @@ router.get("/profile/:id", async (req, res) => {
   }
 });
 
-router.patch("/profile/:id", authorise, async (req, res) => {
+router.patch("/profile/:id", async (req, res) => {
+  console.log("heyyyy");
   const userId = req.params.id;
   const url = req.body.iconUrl;
   console.log(userId);
