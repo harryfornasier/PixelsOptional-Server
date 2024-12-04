@@ -104,6 +104,8 @@ router.patch("/profile/:id", authorise, async (req, res) => {
   const userId = req.params.id;
   const url = req.body.iconUrl;
 
+  console.log(url);
+
   try {
     //const user = await knex("user").insert().where({ id: userId }).first();
 
