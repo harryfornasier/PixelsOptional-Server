@@ -44,7 +44,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", authorise, async (req, res) => {
   const postId = req.params.id;
   const commentId = req.body.commentId;
   console.log(req.token.id);
