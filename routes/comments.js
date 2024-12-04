@@ -47,8 +47,9 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.delete("/:id", authorise, async (req, res) => {
+router.delete("/:id", async (req, res) => {
   const postId = req.params.id;
+  console.log(req.token);
   try {
     const post = await knex("post")
       .increment("comment_count", -1)
