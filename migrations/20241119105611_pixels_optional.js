@@ -37,6 +37,8 @@ export function up(knex) {
     })
     .createTable("comment", (table) => {
       table.increments("id");
+      table.timestamp("created_at").defaultTo(knex.fn.now());
+      table.timestamp("updated_at").defaultTo(knex.fn.now());
       table.integer("post_id").unsigned().notNullable();
       table
         .foreign("post_id")
