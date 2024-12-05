@@ -8,11 +8,10 @@ export async function postCameraDb(newCamera) {
 }
 
 export async function getCamerasByProfileQuery(userId) {
-  const cameras = knex("user_camera")
+  const cameras = await knex("user_camera")
     .join("camera", "camera.id", "user_camera.camera_id")
     .where("user_camera.user_id", userId)
     .select("*");
 
-  console.log(cameras);
   return cameras;
 }
