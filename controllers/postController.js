@@ -53,7 +53,7 @@ export async function postImage(req, res) {
           camera_id: 1,
           orientation: landscape,
         };
-        const newPost = await postImageDb();
+        const newPost = await postImageDb(imageData);
         res.status(201).send({ msg: "Image uploaded succesfully", newPost });
       } catch (error) {
         console.log(error);
@@ -66,11 +66,10 @@ export async function postImage(req, res) {
 export async function getPosts(req, res) {
   const offset = parseInt(req.query.page) * 21 - 21;
   const userId = req.query.userId;
+
   try {
-    if (!userId) {
-      const posts = await getPostsDb(userId, offset);
-      res.status(200).json(posts);
-    }
+    const posts = await getPostsDb(userId, offset);
+    res.status(200).json(posts);
   } catch (error) {
     res.status(500).json({ mesesage: `Error fetching from database: ${error}` });
   }
