@@ -17,5 +17,5 @@ export async function postCamera(req, res) {
 export async function getCamerasByUser(req, res) {
   const userId = req.params.id;
   const cameras = getCamerasByProfileQuery(userId);
-  res.status(200).send(cameras);
+  res.status(200).json({ msg: "Found the cameras", cameras });
 }
