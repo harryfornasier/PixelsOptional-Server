@@ -10,117 +10,49 @@ export async function postImageDb(imageData) {
 
 export async function getPostsDb(userId, offset) {
   if (!userId) {
-    const posts = await knex("post")
-      .leftJoin("camera", "post.camera_id", "camera.id")
+    const posts = await knex("camera")
+      .join("post", "camera.id", "post.camera_id")
+      .join("user", "user.id", "post.user_id")
       .leftJoin("post_like", "post.id", "post_like.post_id")
       .leftJoin("comment", "post.id", "comment.post_id")
       .select(
-        "post.id as post_id",
-        "post.created_at",
-        "post.updated_at",
-        "post.user_id",
-        "post.title",
-        "post.comment_count",
-        "post.content",
-        "post.image_url",
-        "post.orientation",
-        "camera.id as camera_id",
-        "camera.model as camera_model",
-        "camera.year as camera_year",
-        "camera.brand as camera_brand",
-        knex.raw("COUNT(DISTINCT post_like.user_id) as like_count"),
+        "camera.*",
+        "post.*",
+        "user.name",
+        "user.icon_url",
+        knex.raw("COUNT(post_like.post_id) as like_count"),
         knex.raw("COUNT(DISTINCT comment.id) as comment_count")
       )
-      .groupBy(
-        "post.id",
-        "post.created_at",
-        "post.updated_at",
-        "post.user_id",
-        "post.title",
-        "post.comment_count",
-        "post.content",
-        "post.image_url",
-        "post.orientation",
-        "camera.id",
-        "camera.model",
-        "camera.year",
-        "camera.brand"
-      )
+      .groupBy("camera.id", "post.id", "user.id")
       .limit(21)
       .offset(offset);
     return posts;
   } else {
-    const posts = await knex("post")
-      .leftJoin("camera", "post.camera_id", "camera.id")
+    const posts = await knex("camera")
+      .orderBy("created_at", "desc")
+      .join("post", "camera.id", "post.camera_id")
+      .join("user", "user.id", "post.user_id")
       .leftJoin("post_like", "post.id", "post_like.post_id")
       .leftJoin("comment", "post.id", "comment.post_id")
       .select(
-        "post.id as post_id",
-        "post.created_at",
-        "post.updated_at",
-        "post.user_id",
-        "post.title",
-        "post.comment_count",
-        "post.content",
-        "post.image_url",
-        "post.orientation",
-        "camera.id as camera_id",
-        "camera.model as camera_model",
-        "camera.year as camera_year",
-        "camera.brand as camera_brand",
-        knex.raw("COUNT(DISTINCT post_like.user_id) as like_count"),
+        "camera.*",
+        "post.*",
+        "user.name",
+        "user.icon_url",
+        knex.raw("COUNT(post_like.post_id) as like_count"),
         knex.raw("COUNT(DISTINCT comment.id) as comment_count"),
         knex.raw(`
-       EXISTS (
-         SELECT 1
-         FROM post_like
-         WHERE post_like.post_id = post.id
-           AND post_like.user_id = ${userId}
-       ) AS user_liked
-    `)
+    EXISTS (
+      SELECT 1
+      FROM post_like
+      WHERE post_like.post_id = post.id
+        AND post_like.user_id = ${userId}
+    ) AS user_liked
+  `)
       )
-      .groupBy(
-        "post.id",
-        "post.created_at",
-        "post.updated_at",
-        "post.user_id",
-        "post.title",
-        "post.comment_count",
-        "post.content",
-        "post.image_url",
-        "post.orientation",
-        "camera.id",
-        "camera.model",
-        "camera.year",
-        "camera.brand"
-      )
+      .groupBy("camera.id", "post.id", "user.id")
       .limit(21)
       .offset(offset);
-    //   const posts = await knex("camera")
-    //     .orderBy("created_at", "desc")
-    //     .join("post", "camera.id", "post.camera_id")
-    //     .join("user", "user.id", "post.user_id")
-    //     .leftJoin("post_like", "post.id", "post_like.post_id")
-    //     .leftJoin("comment", "post.id", "comment.post_id")
-    //     .select(
-    //       "camera.*",
-    //       "post.*",
-    //       "user.name",
-    //       "user.icon_url",
-    //       knex.raw("COUNT(post_like.post_id) as like_count"),
-    //       knex.raw("COUNT(DISTINCT comment.id) as comment_count"),
-    //       knex.raw(`
-    //   EXISTS (
-    //     SELECT 1
-    //     FROM post_like
-    //     WHERE post_like.post_id = post.id
-    //       AND post_like.user_id = ${userId}
-    //   ) AS user_liked
-    // `)
-    //     )
-    //     .groupBy("camera.id", "post.id", "user.id")
-    //     .limit(21)
-    //     .offset(offset);
     return posts;
   }
 }
