@@ -113,6 +113,7 @@ export async function likePost(req, res) {
 
 export async function deletePost(req, res) {
   const postId = req.params.id;
+  console.log(postId);
   const user = await deletePost(postId);
 
   if (!user.admin) {
