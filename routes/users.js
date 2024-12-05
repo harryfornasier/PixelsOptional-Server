@@ -72,7 +72,14 @@ router.get("/profile", authorise, async (req, res) => {
       .join("post", "post.camera_id", "camera.id")
       .where("post.user_id", req.token.id)
       .join("user", "user.id", "post.user_id")
-      .select("camera.*", "post.*", "user.name");
+      .select(
+        "camera.id as camera_id",
+        "camera.year as camera_year",
+        "camera.model as camera_model",
+        "camera.brand as camera_brand",
+        "post.*",
+        "user.name"
+      );
 
     delete user.password;
 
@@ -103,7 +110,10 @@ router.get("/profile/:id", async (req, res) => {
       .join("user", "user.id", "post.user_id")
       .leftJoin("post_like", "post.id", "post_like.post_id")
       .select(
-        "camera.*",
+        "camera.id as camera_id",
+        "camera.year as camera_year",
+        "camera.model as camera_model",
+        "camera.brand as camera_brand",
         "post.*",
         "user.name",
         "user.icon_url",
