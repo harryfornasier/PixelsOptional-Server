@@ -140,6 +140,11 @@ export async function checkGivingUserDb(givingUserId, receivingUser) {
 }
 
 export async function deletePostDb(postId) {
-  const user = await knex("user").where("id", req.token.id).first();
+  await knex("post").where("post.id", postId).del();
+}
+
+export async function getUserDb(userId) {
+  const user = await knex("user").where("id", userId).first();
+  delete user.password;
   return user;
 }
