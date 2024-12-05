@@ -3,14 +3,14 @@ import { addCameraUserDb } from "../models/User.js";
 
 export async function postCamera(req, res) {
   const userId = req.token.id;
-  console.log(req.body);
+  console.log(req.body.camera);
   const camera = {
     model: req.body.cameraModel,
     year: req.body.cameraYear,
     brand: req.body.cameraBrand,
   };
 
-  const newCamera = await postCameraDb(camera);
-  const addToUser = await addCameraUserDb(userId, newCamera);
+  //const newCamera = await postCameraDb(camera);
+  //const addToUser = await addCameraUserDb(userId, newCamera);
   res.status(201).send(newCamera);
 }
