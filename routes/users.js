@@ -90,7 +90,13 @@ router.get("/profile/:id", async (req, res) => {
       .join("user_camera", "user.id", "user_camera.user_id")
       .join("camera", "user_camera.camera_id", "camera.id")
       .where({ "user.id": userId })
-      .select("user.*", "camera.id as camera_id", "camera.name as camera_name");
+      .select(
+        "user.*",
+        "camera.id as camera_id",
+        "camera.year as camera_year",
+        "camera.model as camera_model",
+        "camera.brand as camera_brand"
+      );
     const posts = await knex("camera")
       .join("post", "camera.id", "post.camera_id")
       .where("post.user_id", userId)
