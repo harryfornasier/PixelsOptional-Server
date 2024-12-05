@@ -15,7 +15,7 @@ export async function getComments(req, res) {
 }
 
 export async function deleteComment(req, res) {
-  const userId = req.toke.id;
+  const userId = req.token.id;
   const commentId = req.body.commentId;
   try {
     const commentDelete = await deleteCommentDb(commentId, userId);
