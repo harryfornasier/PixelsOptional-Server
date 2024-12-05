@@ -70,11 +70,23 @@ export function up(knex) {
         .inTable("post")
         .onUpdate("CASCADE")
         .onDelete("CASCADE");
+    })
+    .createTable("user_camera", (table) => {
+      table.integer("user_id").unsigned().notNullable();
+      table
+        .foreign("user_id")
+        .references("id")
+        .inTable("user")
+        .onUpdate("CASCADE")
+        .onDelete("CASCADE");
+      table.integer("camera_id").unsigned().notNullable();
+      table.foreign("camera_id").references("id").inTable("camera");
     });
 }
 
 export function down(knex) {
   return knex.schema
+    .dropTable("user_camera")
     .dropTable("post_like")
     .dropTable("comment")
     .dropTable("post")

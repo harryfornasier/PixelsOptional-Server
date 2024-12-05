@@ -1,8 +1,9 @@
 import express from "express";
 import cors from "cors";
-import posts from "./routes/posts.js";
+import posts from "./routes/postRoute.js";
 import comments from "./routes/commentRoute.js";
 import users from "./routes/users.js";
+import cameraRoute from "./routes/cameraRoute.js";
 import "dotenv/config";
 
 const app = express();
@@ -19,6 +20,7 @@ app.use(cors());
 app.use("/comments", comments);
 app.use("/posts", posts);
 app.use("/users", users);
+app.use("/cameras", cameraRoute);
 
 app.listen(PORT, () => {
   console.log("App be listening");

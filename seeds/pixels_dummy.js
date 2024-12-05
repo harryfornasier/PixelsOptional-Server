@@ -63,6 +63,12 @@ const cameraData = [
   },
 ];
 
+const userCamera = [
+  { camera_id: 1, user_id: 1 },
+  { camera_id: 1, user_id: 2 },
+  { camera_id: 1, user_id: 3 },
+];
+
 export async function seed(knex) {
   await createPostsDummy();
   await knex("user").del();
@@ -71,4 +77,6 @@ export async function seed(knex) {
   await knex("camera").insert(cameraData);
   await knex("post").del();
   await knex("post").insert(postData);
+  await knex("user_camera").del();
+  await knex("user_camera").insert(userCamera);
 }
