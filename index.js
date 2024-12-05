@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import posts from "./routes/posts.js";
-import comments from "./routes/comments.js";
+import comments from "./routes/commentRoute.js";
 import users from "./routes/users.js";
 import "dotenv/config";
 
