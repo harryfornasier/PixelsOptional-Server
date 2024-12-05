@@ -57,9 +57,9 @@ function createPostsDummy() {
 const cameraData = [
   {
     id: 1,
-    camera_model: "DSC 520",
-    camera_year: 1999,
-    camera_brand: "canon",
+    model: "DSC 520",
+    year: 1999,
+    brand: "canon",
   },
 ];
 
