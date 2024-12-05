@@ -3,7 +3,7 @@ import { addCameraUserDb } from "../models/User.js";
 
 export async function postCamera(req, res) {
   const userId = req.token.id;
-  console.log(req.body.camera);
+  console.log(req.body);
   const camera = {
     model: req.body.cameraModel,
     year: req.body.cameraYear,
