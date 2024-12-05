@@ -12,9 +12,9 @@ export function up(knex) {
     })
     .createTable("camera", (table) => {
       table.increments("id");
-      table.string("camera_model").notNullable();
-      table.integer("camera_year", 4).notNullable();
-      table.string("camera_brand").notNullable();
+      table.string("model").notNullable();
+      table.integer("year", 4).notNullable();
+      table.string("brand").notNullable();
     })
     .createTable("post", (table) => {
       table.increments("id");
