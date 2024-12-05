@@ -16,7 +16,10 @@ export async function getPostsDb(userId, offset) {
       .leftJoin("post_like", "post.id", "post_like.post_id")
       .leftJoin("comment", "post.id", "comment.post_id")
       .select(
-        "camera.*",
+        "camera.id as camera_id",
+        "camera.model as camera_model",
+        "camera.year as camera_year",
+        "camera.brand as camera_brand",
         "post.*",
         "user.name",
         "user.icon_url",
@@ -35,7 +38,10 @@ export async function getPostsDb(userId, offset) {
       .leftJoin("post_like", "post.id", "post_like.post_id")
       .leftJoin("comment", "post.id", "comment.post_id")
       .select(
-        "camera.*",
+        "camera.id as camera_id",
+        "camera.model as camera_model",
+        "camera.year as camera_year",
+        "camera.brand as camera_brand",
         "post.*",
         "user.name",
         "user.icon_url",
