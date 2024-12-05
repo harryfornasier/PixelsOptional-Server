@@ -1,4 +1,4 @@
-import { postCameraDb } from "../models/Camera.js";
+import { getCamerasByProfileQuery, postCameraDb } from "../models/Camera.js";
 import { addCameraUserDb } from "../models/User.js";
 
 export async function postCamera(req, res) {
@@ -16,6 +16,6 @@ export async function postCamera(req, res) {
 
 export async function getCamerasByUser(req, res) {
   const userId = req.params.id;
-  const cameras = getCamerasByUser(userId);
+  const cameras = getCamerasByProfileQuery(userId);
   res.status(200).send(cameras);
 }
