@@ -73,9 +73,9 @@ export async function getPostByIdDb(postId) {
       "post.image_url",
       "post.orientation",
       "camera.id as camera_id",
-      "camera_model as camera_model",
-      "camera_year as camera_year",
-      "camera_brand as camera_brand",
+      "camera.model as camera_model",
+      "camera.year as camera_year",
+      "camera.brand as camera_brand",
       knex.raw("COUNT(DISTINCT post_like.user_id) as like_count"),
       knex.raw("COUNT(DISTINCT comment.id) as comment_count")
     )
@@ -91,9 +91,9 @@ export async function getPostByIdDb(postId) {
       "post.image_url",
       "post.orientation",
       "camera.id",
-      "camera_model",
-      "camera_year",
-      "camera_brand"
+      "camera.model",
+      "camera.year",
+      "camera.brand"
     );
   return post;
 }

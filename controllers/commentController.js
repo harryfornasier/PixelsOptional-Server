@@ -5,7 +5,7 @@ export async function getComments(req, res) {
   try {
     const comments = await getCommentsDb(postId);
     if (!comments.length) {
-      res.status(204).json({ msg: "No comments for this post" });
+      res.status(404).json({ msg: "No comments for this post" });
     } else {
       res.status(200).json({ msg: "Found the comments", comments });
     }

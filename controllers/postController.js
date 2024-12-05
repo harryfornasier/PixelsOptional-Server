@@ -83,7 +83,7 @@ export async function getPostById(req, res) {
     const post = await getPostByIdDb(postId);
     res.status(200).json({ msg: "Found post succesfully", post });
   } catch (error) {
-    res.status(400).send(error);
+    res.status(404).send(error);
   }
 }
 
@@ -104,7 +104,7 @@ export async function likePost(req, res) {
       res.status(403).json({ msg: "You can't like your own posts" });
     } else {
       await likePostDb(postId, givingUserId, receivingUser);
-      res.status(200).json({ msg: "Liked the image" });
+      res.status(204).json({ msg: "Liked the image" });
     }
   } catch (error) {
     res.status(500).json({ msg: "Unknown error", error });

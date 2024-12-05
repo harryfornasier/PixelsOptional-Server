@@ -11,5 +11,5 @@ export async function postCamera(req, res) {
 
   const newCamera = await postCameraDb(camera);
   const addToUser = await addCameraUserDb(userId, newCamera);
-  res.status(200).send(newCamera);
+  res.status(201).send(newCamera);
 }
