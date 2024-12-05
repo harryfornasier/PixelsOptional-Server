@@ -124,6 +124,10 @@ export async function likePostDb(postId, givingUserId, receivingUser) {
         post_id: postId,
       });
 
+      const receivingUserIncrease = await knex("user")
+        .increment("post", 1)
+        .increment("likes", 1)
+        .where("user.id", receivingUser);
       //
       const givingUserDecrease = await knex("user")
         .increment("pot", -1)
