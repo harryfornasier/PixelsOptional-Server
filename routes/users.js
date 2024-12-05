@@ -69,7 +69,7 @@ router.get("/profile", authorise, async (req, res) => {
   try {
     const user = await knex("user").where({ id: req.token.id }).first();
     const posts = await knex("camera")
-      .join("post", "camera.id", "post.camera_id")
+      .join("post", "post.camera_id", "camera.id")
       .where("post.user_id", req.token.id)
       .join("user", "user.id", "post.user_id")
       .select("camera.*", "post.*", "user.name");
@@ -98,7 +98,7 @@ router.get("/profile/:id", async (req, res) => {
         "camera.brand as camera_brand"
       );
     const posts = await knex("camera")
-      .join("post", "camera.id", "post.camera_id")
+      .join("post", "post.camera_id", "camera.id")
       .where("post.user_id", userId)
       .join("user", "user.id", "post.user_id")
       .leftJoin("post_like", "post.id", "post_like.post_id")
