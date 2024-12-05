@@ -7,6 +7,8 @@ import {
   getPostsDb,
   deletePostDb,
   likePostDb,
+  alreadyLikedDb,
+  checkGivingUserDb,
 } from "../models/Post.js";
 
 const upload = multer({
@@ -90,8 +92,19 @@ export async function likePost(req, res) {
   const givingUserId = parseInt(req.token.id);
   const receivingUser = req.body.foreignUser;
   try {
-    const likePhoto = await likePostDb(postId, givingUserId, receivingUser);
-
+    if (await alreadyLikedDb(postId, givingUserId)) {
+      res.status(501).json({ msg: "Unlike functionality not implemented" });
+    } else if (
+      (await checkGivingUserDb(givingUserId, receivingUser)) === "insufficient likes"
+    ) {
+      res.status(403).json({ msg: "You don't have enough likes in your pot" });
+    } else if (
+      (await checkGivingUserDb(givingUserId, receivingUser)) === "like own post"
+    ) {
+      res.status(403).json({ msg: "You can't like your own posts" });
+    } else {
+      await likePostDb(postId, givingUserId, receivingUser);
+    }
     res.status(200).json({ msg: "Liked the image" });
   } catch (error) {
     res.status(500).json({ msg: "Unknown error", error });

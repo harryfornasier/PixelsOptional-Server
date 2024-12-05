@@ -99,42 +99,37 @@ export async function getPostByIdDb(postId) {
 }
 
 export async function likePostDb(postId, givingUserId, receivingUser) {
+  const like = await knex("post_like").insert({
+    user_id: givingUserId,
+    post_id: postId,
+  });
+
+  const receivingUserIncrease = await knex("user")
+    .increment("pot", 1)
+    .increment("likes", 1)
+    .where("user.id", receivingUser);
+  //
+  const givingUserDecrease = await knex("user")
+    .increment("pot", -1)
+    .where("user.id", givingUserId);
+}
+
+export async function alreadyLikedDb(postId, givingUserId) {
   const alreadyLiked = await knex("post_like")
     .where({ user_id: givingUserId, post_id: postId })
     .first();
+  return alreadyLiked;
+}
 
-  if (alreadyLiked) {
-    //undo
+export async function checkGivingUserDb(givingUserId, receivingUser) {
+  const givingUser = await knex("user").where("user.id", givingUserId).first();
+
+  if (givingUser.pot < 1) {
+    return "insufficient likes";
+  } else if (givingUser.id === receivingUser) {
+    return "like own post";
   } else {
-    const givingUser = await knex("user").where("user.id", givingUserId).first();
-
-    if (givingUser.pot < 1) {
-      return false;
-      res.status(403).json({ msg: "You don't have enough likes in your pot" });
-    } else if (givingUser.id === receivingUser) {
-      return false;
-      res.status(403).json({ msg: "You can't like your own posts" });
-    } else {
-      const user = await knex("user").where("id", givingUserId).first();
-      const post = await knex("post").where("id", postId).first();
-
-      //
-      const like = await knex("post_like").insert({
-        user_id: givingUserId,
-        post_id: postId,
-      });
-
-      const receivingUserIncrease = await knex("user")
-        .increment("pot", 1)
-        .increment("likes", 1)
-        .where("user.id", receivingUser);
-      //
-      const givingUserDecrease = await knex("user")
-        .increment("pot", -1)
-        .where("user.id", givingUserId);
-
-      return true;
-    }
+    return true;
   }
 }
 
