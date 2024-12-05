@@ -112,9 +112,9 @@ export async function likePost(req, res) {
 }
 
 export async function deletePost(req, res) {
-  const { postId } = req.params.id;
+  const postId = req.params;
   console.log(postId);
-  const user = await deletePost(postId);
+  const user = await deletePost(postId.id);
 
   if (!user.admin) {
     res.status(403).json({ msg: "You're not allowed to delete posts" });
