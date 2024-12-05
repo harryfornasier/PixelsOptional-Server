@@ -104,8 +104,8 @@ export async function likePost(req, res) {
       res.status(403).json({ msg: "You can't like your own posts" });
     } else {
       await likePostDb(postId, givingUserId, receivingUser);
+      res.status(200).json({ msg: "Liked the image" });
     }
-    res.status(200).json({ msg: "Liked the image" });
   } catch (error) {
     res.status(500).json({ msg: "Unknown error", error });
   }
