@@ -3,7 +3,7 @@ import knexConfig from "../knexfile.js";
 
 const knex = initKnex(knexConfig);
 
-export async function postImageDb() {
+export async function postImageDb(imageData) {
   const newPost = await knex("post").insert(imageData);
   return newPost;
 }
