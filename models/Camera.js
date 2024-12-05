@@ -13,6 +13,6 @@ export async function getCamerasByProfileQuery(userId) {
     .where("user_camera.user_id", userId)
     .select("*");
 
-  console.log(camera);
+  console.log(cameras);
   return cameras;
 }
