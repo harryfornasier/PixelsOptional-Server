@@ -69,14 +69,15 @@ export async function getPostsDb(userId, offset) {
         "camera.year as camera_year",
         "camera.brand as camera_brand",
         knex.raw("COUNT(DISTINCT post_like.user_id) as like_count"),
-        knex.raw("COUNT(DISTINCT comment.id) as comment_count")knex.raw(`
+        knex.raw("COUNT(DISTINCT comment.id) as comment_count"),
+        knex.raw(`
        EXISTS (
          SELECT 1
          FROM post_like
          WHERE post_like.post_id = post.id
            AND post_like.user_id = ${userId}
        ) AS user_liked
-    `) 
+    `)
       )
       .groupBy(
         "post.id",
