@@ -6,6 +6,6 @@ const router = express.Router();
 
 router.post("/", authorise, postCamera);
 
-router.get("/", getCamerasByUser);
+router.get("/:id", getCamerasByUser);
 
 export default router;

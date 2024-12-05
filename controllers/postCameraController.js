@@ -15,7 +15,7 @@ export async function postCamera(req, res) {
 }
 
 export async function getCamerasByUser(req, res) {
-  const userId = req.token.id;
+  const userId = req.params.id;
   const cameras = getCamerasByUser(userId);
   res.status(200).send(cameras);
 }
