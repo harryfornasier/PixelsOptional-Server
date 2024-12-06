@@ -27,7 +27,7 @@ router.post("/register", (req, res) => {
           name: req.body.name,
           email: req.body.email,
           password: hashedPassword,
-          icon_url: 1,
+          icon_url: "https://harrisonfornasier.uk/icons/foreman-gui-icon.png",
           likes: 0,
           pot: 100,
           admin: false,
