@@ -53,7 +53,7 @@ export async function postImage(req, res) {
           title: req.body.title,
           content: "",
           image_url: src,
-          camera_id: 1,
+          camera_id: req.body.camera_id,
           orientation: landscape,
         };
         const newPost = await postImageDb(imageData);
