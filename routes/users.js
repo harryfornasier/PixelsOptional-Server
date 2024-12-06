@@ -27,6 +27,7 @@ router.post("/register", (req, res) => {
           name: req.body.name,
           email: req.body.email,
           password: hashedPassword,
+          icon_url: 1,
           likes: 0,
           pot: 100,
           admin: false,
