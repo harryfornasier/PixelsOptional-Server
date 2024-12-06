@@ -19,8 +19,11 @@ export async function deleteComment(req, res) {
   const commentId = req.body.commentId;
   try {
     const commentDelete = await deleteCommentDb(commentId, userId);
-    console.log(commentDelete);
-    res.status(204).json({ msg: "Comment deleted", commentDelete });
+    if (commentDelete) {
+      res.status(403).json({ msg: "You can't delete other users comments" });
+    } else {
+      res.status(204).json({ msg: "Comment deleted", commentDelete });
+    }
   } catch (error) {
     res.status(500).send(error);
   }
