@@ -56,8 +56,13 @@ export async function postImage(req, res) {
           camera_id: req.body.camera_id,
           orientation: landscape,
         };
-        const newPost = await postImageDb(imageData);
-        res.status(201).send({ msg: "Image uploaded succesfully", newPost });
+
+        if (!req.body.title) {
+          res.status(400).json({ msg: "No title included" });
+        } else {
+          const newPost = await postImageDb(imageData);
+          res.status(201).send({ msg: "Image uploaded succesfully", newPost });
+        }
       } catch (error) {
         console.log(error);
         res.status(400).send(error);
@@ -80,11 +85,21 @@ export async function getPosts(req, res) {
 
 export async function getPostById(req, res) {
   const postId = req.params.id;
-  try {
-    const post = await getPostByIdDb(postId);
-    res.status(200).json({ msg: "Found post succesfully", post });
-  } catch (error) {
-    res.status(404).send(error);
+
+  if (isNaN(postId) || postId < 1) {
+    res.status(400).json({ msg: "Letter or negative in url path" });
+  } else {
+    try {
+      const post = await getPostByIdDb(postId);
+
+      if (!post.length) {
+        res.status(404).json({ msg: "Post not found" });
+      } else {
+        res.status(200).json({ msg: "Found post succesfully", post });
+      }
+    } catch (error) {
+      res.status(404).send(error);
+    }
   }
 }
 
