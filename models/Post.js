@@ -11,6 +11,7 @@ export async function postImageDb(imageData) {
 export async function getPostsDb(userId, offset) {
   if (!userId) {
     const posts = await knex("camera")
+      .orderBy("created_at", "desc")
       .join("post", "post.camera_id", "camera.id")
       .join("user", "user.id", "post.user_id")
       .leftJoin("post_like", "post.id", "post_like.post_id")
