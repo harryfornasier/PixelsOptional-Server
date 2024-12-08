@@ -33,7 +33,7 @@ router.post("/register", (req, res) => {
           admin: false,
         });
 
-        res.status(201).json({ msg: `New User with id ${newUserTemp.id} Created` });
+        res.status(201).json({ msg: `New User Created` });
       }
     } catch (error) {
       res.status(500).json({ msg: `Couldn't create user 😱: ${error.message}` });
