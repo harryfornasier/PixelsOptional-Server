@@ -13,6 +13,8 @@ app.use(express.json());
 app.use("/static", express.static("images"));
 app.use("/icons", express.static("icons"));
 
+app.use(cors());
+
 // app.use("/images", images);
 app.use("/comments", comments);
 app.use("/posts", posts);
