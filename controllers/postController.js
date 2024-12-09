@@ -77,7 +77,13 @@ export async function postImage(req, res) {
 }
 
 export async function getPosts(req, res) {
-  const offset = parseInt(req.query.page) * 21 - 21;
+  let offset = 1;
+  if (!req.query.page) {
+    offset = 1;
+  } else {
+    offset = parseInt(req.query.page) * 21 - 21;
+  }
+
   const userId = req.query.userId;
 
   try {
