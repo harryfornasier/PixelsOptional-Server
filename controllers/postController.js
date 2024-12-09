@@ -12,6 +12,8 @@ import {
   getUserDb,
 } from "../models/Post.js";
 
+const BASE_URL = process.env.BASE_URL;
+
 const upload = multer({
   limits: {
     fileSize: 5000000,
@@ -35,12 +37,15 @@ export async function postImage(req, res) {
       const newUuid = uuidv4();
       let landscape = false;
       const path = `./images/${newUuid}.jpg`;
-      const src = `https://harrisonfornasier.uk/static/${newUuid}.jpg`;
+      const src = `${BASE_URL}/static/${newUuid}.jpg`;
 
       try {
         const image = await sharp(req.file.buffer)
           .keepMetadata()
-          .toFormat("jpg")
+          .jpeg({
+            quality: 85,
+            chromaSubsampling: "4:4:4",
+          })
           .toFile(path);
 
         if (image.height > image.width) {
