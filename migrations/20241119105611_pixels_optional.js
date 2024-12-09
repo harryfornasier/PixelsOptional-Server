@@ -86,10 +86,12 @@ export function up(knex) {
 
 export function down(knex) {
   return knex.schema
+
     .dropTable("user_camera")
     .dropTable("post_like")
     .dropTable("comment")
     .dropTable("post")
+    .dropTable("competition")
     .dropTable("camera")
     .dropTable("user");
 }

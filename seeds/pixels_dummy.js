@@ -1,3 +1,7 @@
+import initKnex from "knex";
+import knexConfig from "../knexfile.js";
+const knex = initKnex(knexConfig);
+
 const userData = [
   {
     id: 1,
@@ -69,8 +73,17 @@ const userCamera = [
   { camera_id: 1, user_id: 3 },
 ];
 
+const competition = [
+  {
+    name: "Bikes",
+    end_date: knex.raw("DATE_ADD(NOW(), INTERVAL 1 MONTH)"),
+  },
+];
+
 export async function seed(knex) {
   await createPostsDummy();
+  await knex("competition").del();
+  await knex("competition").insert(competition);
   await knex("user").del();
   await knex("user").insert(userData);
   await knex("camera").del();
