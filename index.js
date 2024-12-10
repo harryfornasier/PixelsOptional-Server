@@ -4,6 +4,7 @@ import posts from "./routes/postRoute.js";
 import comments from "./routes/commentRoute.js";
 import users from "./routes/users.js";
 import cameraRoute from "./routes/cameraRoute.js";
+import competitionRoute from "./routes/competitionRoute.js";
 import "dotenv/config";
 
 const app = express();
@@ -20,6 +21,7 @@ app.use("/comments", comments);
 app.use("/posts", posts);
 app.use("/users", users);
 app.use("/cameras", cameraRoute);
+app.use("/competitions", competitionRoute);
 
 app.listen(PORT, () => {
   console.log("App be listening");

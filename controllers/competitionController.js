@@ -1,4 +1,4 @@
-import { insertCompetition } from "../models/Competition.js";
+import { getCompetitionQuery, insertCompetition } from "../models/Competition.js";
 
 export async function createCompetition(req, res) {
   const competition = {
@@ -7,7 +7,7 @@ export async function createCompetition(req, res) {
   };
 
   try {
-    const competitionId = insertCompetition(competition);
+    const competitionId = await insertCompetition(competition);
 
     res.status(201).json({ msg: "Competition created", competitionId });
   } catch (error) {
@@ -15,4 +15,7 @@ export async function createCompetition(req, res) {
   }
 }
 
-export async function getCompetitions(req, res) {}
+export async function getCompetitions(req, res) {
+  const competitions = await getCompetitionQuery();
+  res.status(200).json({ competitions });
+}

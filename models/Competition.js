@@ -11,4 +11,9 @@ const insertCompetition = async (competitionObj) => {
   return competition;
 };
 
-export { insertCompetition };
+const getCompetitionQuery = async () => {
+  const competitions = await knex("competition").where("end_date", ">", knex.fn.now());
+  return competitions;
+};
+
+export { insertCompetition, getCompetitionQuery };
