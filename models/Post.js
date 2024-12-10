@@ -128,6 +128,21 @@ export async function alreadyLikedDb(postId, givingUserId) {
   return alreadyLiked;
 }
 
+export async function removeLike(givingUserId, receivingUser) {
+  const removeLike = await knex("post_like").where("user_id", givingUserId).del();
+
+  const receivingUserIncrease = await knex("user")
+    .increment("pot", -1)
+    .increment("likes", -1)
+    .where("user.id", receivingUser);
+  //
+  const givingUserDecrease = await knex("user")
+    .increment("pot", 1)
+    .where("user.id", givingUserId);
+
+  return removeLike;
+}
+
 export async function checkGivingUserDb(givingUserId, receivingUser) {
   const givingUser = await knex("user").where("user.id", givingUserId).first();
 
