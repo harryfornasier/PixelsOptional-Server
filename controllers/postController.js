@@ -10,6 +10,7 @@ import {
   alreadyLikedDb,
   checkGivingUserDb,
   getUserDb,
+  removeLike,
 } from "../models/Post.js";
 
 const BASE_URL = process.env.BASE_URL;
@@ -114,7 +115,8 @@ export async function likePost(req, res) {
   const receivingUser = req.body.foreignUser;
   try {
     if (await alreadyLikedDb(postId, givingUserId)) {
-      res.status(501).json({ msg: "Unlike functionality not implemented" });
+      removeLike(givingUserId, receivingUser);
+      res.status(204).json({ msg: "Remove like" });
     } else if (
       (await checkGivingUserDb(givingUserId, receivingUser)) === "insufficient likes"
     ) {
