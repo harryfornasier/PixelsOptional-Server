@@ -16,6 +16,7 @@ export async function getPostsDb(userId, offset) {
       .join("user", "user.id", "post.user_id")
       .leftJoin("post_like", "post.id", "post_like.post_id")
       .leftJoin("comment", "post.id", "comment.post_id")
+      .leftJoin("competition", "post.competition_id", "competition.id")
       .select(
         "camera.id as camera_id",
         "camera.model as camera_model",
@@ -24,10 +25,11 @@ export async function getPostsDb(userId, offset) {
         "post.*",
         "user.name",
         "user.icon_url",
+        "competition.name as competition_name",
         knex.raw("COUNT(post_like.post_id) as like_count"),
         knex.raw("COUNT(DISTINCT comment.id) as comment_count")
       )
-      .groupBy("camera.id", "post.id", "user.id")
+      .groupBy("camera.id", "post.id", "user.id", "competition.id")
       .limit(21)
       .offset(offset);
     return posts;
@@ -38,6 +40,7 @@ export async function getPostsDb(userId, offset) {
       .join("user", "user.id", "post.user_id")
       .leftJoin("post_like", "post.id", "post_like.post_id")
       .leftJoin("comment", "post.id", "comment.post_id")
+      .leftJoin("competition", "post.competition_id", "competition.id")
       .select(
         "camera.id as camera_id",
         "camera.model as camera_model",
@@ -46,6 +49,7 @@ export async function getPostsDb(userId, offset) {
         "post.*",
         "user.name",
         "user.icon_url",
+        "competition.name as competition_name",
         knex.raw("COUNT(post_like.post_id) as like_count"),
         knex.raw("COUNT(DISTINCT comment.id) as comment_count"),
         knex.raw(`
@@ -62,6 +66,32 @@ export async function getPostsDb(userId, offset) {
       .offset(offset);
     return posts;
   }
+}
+
+export async function getFilteredPosts(offset, competitionId) {
+  const posts = await knex("camera")
+    .orderBy("created_at", "desc")
+    .join("post", "post.camera_id", "camera.id")
+    .join("user", "user.id", "post.user_id")
+    .leftJoin("post_like", "post.id", "post_like.post_id")
+    .leftJoin("comment", "post.id", "comment.post_id")
+    .select(
+      "camera.id as camera_id",
+      "camera.model as camera_model",
+      "camera.year as camera_year",
+      "camera.brand as camera_brand",
+      "post.*",
+      "user.name",
+      "user.icon_url",
+      knex.raw("COUNT(post_like.post_id) as like_count"),
+      knex.raw("COUNT(DISTINCT comment.id) as comment_count")
+    )
+    .where("competition_id", competitionId)
+    .groupBy("camera.id", "post.id", "user.id")
+    .limit(21)
+    .offset(offset);
+
+  return posts;
 }
 
 export async function getPostByIdDb(postId) {

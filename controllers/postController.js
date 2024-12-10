@@ -10,6 +10,7 @@ import {
   alreadyLikedDb,
   checkGivingUserDb,
   getUserDb,
+  getFilteredPosts,
 } from "../models/Post.js";
 
 const BASE_URL = process.env.BASE_URL;
@@ -60,6 +61,7 @@ export async function postImage(req, res) {
           image_url: src,
           camera_id: req.body.camera_id,
           orientation: landscape,
+          competition_id: req.body.competition ? req.body.competition : null,
         };
 
         if (!req.body.title) {
@@ -79,16 +81,22 @@ export async function postImage(req, res) {
 export async function getPosts(req, res) {
   let offset = 1;
   if (!req.query.page) {
-    offset = 1;
+    offset = 0;
   } else {
     offset = parseInt(req.query.page) * 21 - 21;
   }
 
   const userId = req.query.userId;
-
+  const competitionId = req.query.competitionId;
   try {
-    const posts = await getPostsDb(userId, offset);
-    res.status(200).json(posts);
+    if (competitionId) {
+      const posts = await getFilteredPosts(offset, competitionId);
+      console.log(posts);
+      res.status(200).json(posts);
+    } else {
+      const posts = await getPostsDb(userId, offset);
+      res.status(200).json(posts);
+    }
   } catch (error) {
     res.status(500).json({ mesesage: `Error fetching from database: ${error}` });
   }
