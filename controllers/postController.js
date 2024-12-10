@@ -115,7 +115,7 @@ export async function likePost(req, res) {
   const receivingUser = req.body.foreignUser;
   try {
     if (await alreadyLikedDb(postId, givingUserId)) {
-      removeLike(givingUserId, receivingUser);
+      removeLike(givingUserId, receivingUser, postId);
       res.status(204).json({ msg: "Remove like" });
     } else if (
       (await checkGivingUserDb(givingUserId, receivingUser)) === "insufficient likes"

@@ -128,8 +128,11 @@ export async function alreadyLikedDb(postId, givingUserId) {
   return alreadyLiked;
 }
 
-export async function removeLike(givingUserId, receivingUser) {
-  const removeLike = await knex("post_like").where("user_id", givingUserId).del();
+export async function removeLike(givingUserId, receivingUser, postId) {
+  const removeLike = await knex("post_like")
+    .where("user_id", givingUserId)
+    .andWhere("post_id", postId)
+    .del();
 
   const receivingUserIncrease = await knex("user")
     .increment("pot", -1)
