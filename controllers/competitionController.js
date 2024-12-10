@@ -14,3 +14,5 @@ export async function createCompetition(req, res) {
     res.status(500).json({ error });
   }
 }
+
+export async function getCompetitions(req, res) {}
