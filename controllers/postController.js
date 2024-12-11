@@ -21,7 +21,7 @@ const upload = multer({
   },
 
   fileFilter(req, file, cb) {
-    if (!file.originalname.match(/\.(jpg|jpeg|png|JPG)$/)) {
+    if (!file.originalname.match(/\.(jpg|jpeg|png|JPG|webp)$/)) {
       return cb(new Error("Please upload a valid image file"));
     }
     cb(undefined, true);
@@ -91,7 +91,6 @@ export async function getPosts(req, res) {
   try {
     if (competitionId) {
       const posts = await getFilteredPosts(offset, competitionId);
-      console.log(posts);
       res.status(200).json(posts);
     } else {
       const posts = await getPostsDb(userId, offset);

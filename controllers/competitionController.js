@@ -2,14 +2,18 @@ import { getCompetitionQuery, insertCompetition } from "../models/Competition.js
 
 export async function createCompetition(req, res) {
   const competition = {
-    name: req.body.competitionName,
-    description: req.body.competitionDescription,
+    name: req.body.name,
+    description: req.body.description,
   };
 
   try {
-    const competitionId = await insertCompetition(competition);
+    if (req.body.name || req.body.description) {
+      const competitionId = await insertCompetition(competition);
 
-    res.status(201).json({ msg: "Competition created", competitionId });
+      res.status(201).json({ msg: "Competition created", competitionId });
+    } else {
+      res.status(400).json({ msg: "Field 'name' or 'description' cannot be empty." });
+    }
   } catch (error) {
     res.status(500).json({ error });
   }
