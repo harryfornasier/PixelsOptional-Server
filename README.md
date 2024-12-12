@@ -22,17 +22,12 @@ The images folder is using 'express.static' to server the files for the front-en
 
 ## Technologies
 
-- **Frontend**: JavaScript, SCSS, Vite.js.
-- **Hosting**: Vercel.
+- **Backend**: Node.js
+- **Packgages**: Multer, Sharp, Bcrypt, Knex, uuid, mysql2
 
 ## Things I'd Like to Add
 
-Future ideas for improving PixelsOptional:
-- **Categories**: Allow users to filter photos by different categories for easier browsing.
-- **Monthly Competitions**: Introduce a feature where users can participate in monthly challenges by taking photos of the same theme. The photo with the most likes at the end of the month wins.
+- **BMP Support**: Since this website is for users of older cameras I'd like to find a way to support the conversion of BMP images on the backend. Sharp does not support this file type.
 
-## Unimplemented Features
-
-Some features are not yet implemented:
-- **Delete Own Posts**: You can't delete your own posts.
-- **Delete Account**: You can't delete your account.
+## Known Issues
+- **Users Route**: The users route should be split into Controllers and Models. It is currently in one file.
