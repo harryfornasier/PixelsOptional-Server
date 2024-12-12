@@ -15,6 +15,29 @@ Feel free to make an account and post some photos, preferably from an older came
 
 ### General Folder Structure
 
+``` arduino
+├── controllers/ # Logic to handle requests and responses
+├── icons/ # Static icons for the front end
+├── routes/ # Endpoint definitions and route handlers
+├── middlewares/ 
+├── seeds/ # dummy data for the mysql database
+├── images/ # Storage for all posted images
+├── migrations/ # The Knex migrations to populate the mysql database
+├── models/ # knex queries for mysql
+├── index.js # Entry point for the application
+└── package.json # Project dependencies and scripts
+```
+
+### Endpoint structure
+
+``` arduino
+├── posts #Endpoint for querying the posts | DELETE, POST, GET, PATCH
+├── cameras #Endpoint for querying many-to-many table of cameras | POST, GET
+├── comments #Endpoint for querying comment table | POST, GET, DELETE
+├── (WIP) Competition #Endpoint for querying the many-to-many table of competitions | POST, GET
+├── users #Endpoint for querying the user table | POST, GET, PATCH
+```
+
 
 ### Authentication
 
