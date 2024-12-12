@@ -27,7 +27,6 @@ Feel free to make an account and post some photos, preferably from an older came
 ├── index.js # Entry point for the application
 └── package.json # Project dependencies and scripts
 ```
-
 ### Endpoint structure
 
 ``` arduino
@@ -37,8 +36,6 @@ Feel free to make an account and post some photos, preferably from an older came
 ├── (WIP) Competition #Endpoint for querying the many-to-many table of competitions | POST, GET
 ├── users #Endpoint for querying the user table | POST, GET, PATCH
 ```
-
-
 ### Authentication
 
 The authentication is custom, using bcrypt to hash the passwords and jwt for the tokens. A custom authentication middleware is then used to check if the user is logged in.
@@ -61,5 +58,5 @@ The images folder is using 'express.static' to server the files for the front-en
 - **Users Route**: The users route should be split into Controllers and Models. It is currently in one file.
 
 ## Known Issues
-- **
+- **Image Upload inconsistencies**: Occasionally when uploading an image it will fail to upload, only displaying a white screen. I have yet to replicate this issue, but it seems to happen more often on phones. It needs more testing.
 
