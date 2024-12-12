@@ -16,7 +16,9 @@ This API is hosted on my own hardware, a thinkstation TS440 running Ubuntu 22. I
 
 The images are sent using FormData to a /posts endpoint with express. The middleware Multer is used to parse the multipart/form-data stream to file. I created a Multer configuration that limits the filesize to 5mb and used regex to limit the filetypes to ones supported by Sharp.
 
-I used the npm package Sharp to rotate the images and compress them with standard jpeg compression. Once compressed sharp moves the file to a /images folder, with a unique uuid file name. This file name is added as a field within the corresponding 'post' table. 
+I used the npm package Sharp to rotate the images and compress them with standard jpeg compression. Once compressed sharp moves the file to a images folder, with a unique uuid file name. This file name is added as a field within the corresponding 'post' table. 
+
+The images folder is using 'express.static' to server the files for the front-end
 
 ## Technologies
 
