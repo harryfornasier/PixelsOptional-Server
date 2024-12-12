@@ -59,4 +59,5 @@ The images folder is using 'express.static' to server the files for the front-en
 
 ## Known Issues
 - **Image Upload inconsistencies**: Occasionally when uploading an image it will fail, only displaying a white screen. I have yet to replicate this issue, but it seems to happen more often on phones. It needs more testing.
+- **Admin Delete on mobile safari**: The admin button to delete posts doesn't appear on the mobile version of safari.
 
