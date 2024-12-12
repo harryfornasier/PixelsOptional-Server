@@ -1,14 +1,16 @@
 # PixelsOptional
 
-## [Front-End for this repo] (https://github.com/harryfornasier/PixelsOptional-Server)
+## [Front-End for this repo] (https://github.com/harryfornasier/PixelsOptional)
 
 PixelsOptional is a platform for sharing images taken with retro cameras, including both film and early digital models. The project is live and accessible at [PixelsOptional](https://pixels-optional.vercel.app).
 
 Feel free to make an account and post some photos, preferably from an older camera. Make sure to use a random password when you make your account!  
-Although it asks for an email when you sign up, there is currently no functionality tied to emails, so you can use a fake email if you wish.
-
 
 ## How does it work?
+
+### Hosting
+
+This API is hosted on my own hardware, a thinkstation TS440 running Ubuntu 22. I've used NGINX as the reverse proxy and everything is encrypted using cloudflare's certificates.
 
 ### The images
 
