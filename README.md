@@ -50,11 +50,12 @@ The images are sent using FormData to a /posts endpoint with express. The middle
 
 I used the npm package Sharp to rotate the images and compress them with standard jpeg compression. Once compressed sharp writes the file to an images folder, with a unique uuid file name. This file name is added as a field within the corresponding 'post' table. 
 
-The images folder is using 'express.static' to server the files for the front-end
+The images folder is using 'express.static' to server the files for the front-end.
 
 ## Next steps
 
 - **BMP Support**: Since this website is for users of older cameras I'd like to find a way to support the conversion of BMP images on the backend. Sharp does not support this file type.
+- **Competitions**: I want to add competitions that users can take part in. Each month there will be some themes that you can take pictures around, the user with the most likes at the end of the month will the winner. I plan to use node-cron to schedule daily checks to see if the competition is over and then automatically crown a winner.
 - **Users Route**: The users route should be split into Controllers and Models. It is currently in one file.
 
 ## Known Issues
