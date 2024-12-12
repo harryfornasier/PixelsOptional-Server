@@ -6,7 +6,19 @@ PixelsOptional is a platform for sharing images taken with retro cameras, includ
 
 Feel free to make an account and post some photos, preferably from an older camera. Make sure to use a random password when you make your account!  
 
+## Technologies
+
+- **Backend**: Node.js
+- **Packgages**: Multer, Sharp, Bcrypt, Knex, uuid, mysql2
+
 ## How does it work?
+
+### General Folder Structure
+
+
+### Authentication
+
+The authentication is custom, using bcrypt to hash the passwords and jwt for the tokens. A custom authentication middleware is then used to check if the user is logged in.
 
 ### Hosting
 
@@ -20,14 +32,11 @@ I used the npm package Sharp to rotate the images and compress them with standar
 
 The images folder is using 'express.static' to server the files for the front-end
 
-## Technologies
-
-- **Backend**: Node.js
-- **Packgages**: Multer, Sharp, Bcrypt, Knex, uuid, mysql2
-
-## Things I'd Like to Add
+## Next steps
 
 - **BMP Support**: Since this website is for users of older cameras I'd like to find a way to support the conversion of BMP images on the backend. Sharp does not support this file type.
+- **Users Route**: The users route should be split into Controllers and Models. It is currently in one file.
 
 ## Known Issues
-- **Users Route**: The users route should be split into Controllers and Models. It is currently in one file.
+- **
+
