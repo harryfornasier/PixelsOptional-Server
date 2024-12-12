@@ -16,7 +16,7 @@ export async function getComments(req, res) {
 
 export async function deleteComment(req, res) {
   const userId = req.token.id;
-  const commentId = req.body.commentId;
+  const commentId = req.params.commentId;
   try {
     const commentDelete = await deleteCommentDb(commentId, userId);
     if (commentDelete === 0) {
@@ -30,7 +30,7 @@ export async function deleteComment(req, res) {
 }
 
 export async function insertComment(req, res) {
-  const postId = req.body.postId;
+  const postId = req.params.id;
   const comment = {
     post_id: postId,
     user_id: req.token.id,
