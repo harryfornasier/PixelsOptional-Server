@@ -41,6 +41,7 @@ export async function insertComment(req, res) {
       res.status(400).json({ msg: "User tried to upload an empty comment" });
     } else {
       const newComment = await insertCommentDb(comment);
+
       res.status(201).json({ msg: "comment uploaded succesfully", newComment });
     }
   } catch (error) {
