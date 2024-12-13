@@ -62,7 +62,6 @@ export async function postImage(req, res) {
           camera_id: req.body.camera_id,
           orientation: landscape,
         };
-
         if (!req.body.title) {
           res.status(400).json({ msg: "No title included" });
         } else {

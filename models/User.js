@@ -9,3 +9,13 @@ export async function addCameraUserDb(userId, cameraId) {
   });
   return userCamera;
 }
+
+export async function registerUserDb(user) {
+  const newUser = await knex("user").insert(user);
+  return newUser;
+}
+
+export async function getUserDb(givenEmail) {
+  const user = await knex("user").where("email", givenEmail).first();
+  return user;
+}

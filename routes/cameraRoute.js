@@ -1,5 +1,5 @@
 import express from "express";
-import { getCamerasByUser, postCamera } from "../controllers/postCameraController.js";
+import { getCamerasByUser, postCamera } from "../controllers/cameraController.js";
 import authorise from "./middleware/auth.js";
 
 const router = express.Router();

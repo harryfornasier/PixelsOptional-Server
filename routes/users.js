@@ -8,6 +8,7 @@ const router = express.Router();
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import authorise from "./middleware/auth.js";
+import { getUserDb, registerUserDb } from "../models/User.js";
 
 const SALT_ROUNDS = 8;
 
@@ -18,12 +19,10 @@ router.post("/register", (req, res) => {
     }
 
     try {
-      const checkUser = await knex("user").where("user.email", req.body.email);
+      const checkUser = await getUserDb(req.body.email);
 
-      if (checkUser.length) {
-        res.status(409).json({ msg: "Account already exisits, try logging in" });
-      } else {
-        const newUserTemp = await knex("user").insert({
+      if (!checkUser.length) {
+        const user = {
           name: req.body.name,
           email: req.body.email,
           password: hashedPassword,
@@ -31,9 +30,11 @@ router.post("/register", (req, res) => {
           likes: 0,
           pot: 100,
           admin: false,
-        });
-
+        };
+        await registerUserDb(user);
         res.status(201).json({ msg: `New User Created` });
+      } else {
+        res.status(409).json({ msg: "Account already exisits, try logging in" });
       }
     } catch (error) {
       res.status(500).json({ msg: `Couldn't create user 😱: ${error.message}` });
@@ -43,7 +44,7 @@ router.post("/register", (req, res) => {
 
 router.post("/login", async (req, res) => {
   try {
-    const user = await knex("user").where({ email: req.body.email }).first();
+    const user = await getUserDb(req.body.email);
 
     bcrypt.compare(req.body.password, user.password, function (_, success) {
       if (!success) {
