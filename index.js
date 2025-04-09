@@ -9,13 +9,22 @@ import "dotenv/config";
 const app = express();
 const PORT = process.env.PORT;
 
+const options = {
+  origin: function (origin, callback) {
+    if (origin === process.env.ORIGIN) {
+      callback(null, true)
+    } else {
+      callback("CORS error: Origin not allowed")
+    }
+  }
+}
+
 app.use(express.json());
 app.use("/static", express.static("images"));
 app.use("/icons", express.static("icons"));
 
-app.use(cors());
+app.use(cors(options));
 
-// app.use("/images", images);
 app.use("/comments", comments);
 app.use("/posts", posts);
 app.use("/users", users);
