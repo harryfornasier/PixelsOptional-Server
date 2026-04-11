@@ -8,8 +8,16 @@ const router = express.Router();
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import authorise from "./middleware/auth.js";
+import rateLimit from "express-rate-limit";
 
 const SALT_ROUNDS = 8;
+
+const profileUpdateLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
 
 router.post("/register", (req, res) => {
   bcrypt.hash(req.body.password, SALT_ROUNDS, async (err, hashedPassword) => {
@@ -133,7 +141,7 @@ router.get("/profile/:id", async (req, res) => {
   }
 });
 
-router.patch("/profile/:id", authorise, async (req, res) => {
+router.patch("/profile/:id", profileUpdateLimiter, authorise, async (req, res) => {
   const url = req.body.iconUrl;
   try {
     const user = await knex("user")
