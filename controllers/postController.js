@@ -71,7 +71,7 @@ export async function postImage(req, res) {
         }
       } catch (error) {
         console.log(error);
-        res.status(400).send(error);
+        res.status(400).json({ msg: "Unable to process uploaded image" });
       }
     }
   });
